@@ -5,7 +5,7 @@ target 'ToDoApp' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for ToDoApp
+Pods for ToDoApp
 pod 'SnapKit' 
 
 end

@@ -7,16 +7,16 @@
 
 import UIKit
 
-enum ToDoItemState {
+enum ToDoItemState: String {
     case expired
     case snoozed
     case waiting
 }
 
 struct ToDoItem {
-    let createDate = Date()
+    let createDate: Date
     var actionDate: Date
     var name: String
+    var subscribe: String
     var state: ToDoItemState = .waiting
-    var subscribe: String?
 }

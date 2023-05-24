@@ -10,64 +10,45 @@ import SnapKit
 
 class ViewController: UIViewController {
 
+    private lazy var scroll: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.showsHorizontalScrollIndicator = false
+        scroll.showsVerticalScrollIndicator = false
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        return scroll
+    }()
+
+    private lazy var stack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 10
+        stack.distribution = .fillEqually
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        createToDoItem()
-    }
-
-    func createToDoItem() {
-        view.backgroundColor = .lightGray
-        let toDoItemView = UIView()
-        view.addSubview(toDoItemView)
-        toDoItemView.backgroundColor = .cyan
-        toDoItemView.layer.cornerRadius = 20
-        toDoItemView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(10)
-            make.top.equalToSuperview().inset(50)
-            make.height.equalTo(200)
+        configure()
+        view.addSubview(scroll)
+        scroll.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
-
-        let nameToDoItemView = UILabel()
-        nameToDoItemView.text = "Name"
-        toDoItemView.addSubview(nameToDoItemView)
-        nameToDoItemView.backgroundColor = .gray
-        nameToDoItemView.layer.cornerRadius = 20
-        nameToDoItemView.layer.masksToBounds = true
-        nameToDoItemView.snp.makeConstraints { make in
-            make.left.right.equalTo(toDoItemView).inset(10)
-            make.height.equalTo(40)
-            make.top.equalTo(toDoItemView).inset(10)
-        }
-
-        let dateToDoItemView = UILabel()
-        dateToDoItemView.text = "Date"
-        toDoItemView.addSubview(dateToDoItemView)
-        dateToDoItemView.backgroundColor = .green
-        dateToDoItemView.layer.cornerRadius = 20
-        dateToDoItemView.layer.masksToBounds = true
-        dateToDoItemView.snp.makeConstraints { make in
-            make.top.equalTo(nameToDoItemView).inset(50)
-            make.left.right.equalTo(toDoItemView).inset(10)
-            make.height.equalTo(40)
+        scroll.addSubview(stack)
+        stack.snp.makeConstraints {
+            $0.leading.trailing.equalTo(scroll.contentLayoutGuide)
+            $0.top.equalTo(scroll.contentLayoutGuide.snp.top).inset(30)
+            $0.bottom.equalTo(scroll.contentLayoutGuide.snp.bottom)
+            $0.width.equalTo(scroll.frameLayoutGuide)
         }
     }
 
-
-//    func createToDoItemView() -> UIView? {
-//        let toDoItemView = UIView()
-//        view.addSubview(toDoItemView)
-//        toDoItemView.translatesAutoresizingMaskIntoConstraints = false
-//        toDoItemView.layer.cornerRadius = 15
-//        toDoItemView.contentMode = UIView.ContentMode.scaleAspectFill
-//        toDoItemView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-//        toDoItemView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -500).isActive = true
-//        toDoItemView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-//        toDoItemView.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -10).isActive = true
-//        toDoItemView.isUserInteractionEnabled = true
-//        toDoItemView.layer.masksToBounds = true
-//        toDoItemView.backgroundColor = .blue
-//        return toDoItemView
-//    }
-
+    private func configure() {
+        let model = ToDoManagerImp.shared.getMockModel()
+        for _ in (1...10) {
+            let mainView = ViewModel()
+            mainView.configure(model: model)
+            stack.addArrangedSubview(mainView)
+        }
+    }
 }
-

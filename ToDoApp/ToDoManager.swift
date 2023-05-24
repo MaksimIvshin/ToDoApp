@@ -17,8 +17,10 @@ protocol ToDoManager {
 
 
 final class ToDoManagerImp: ToDoManager {
+
     static let shared = ToDoManagerImp()
     var toDoList: [ToDoItem] = []
+
     private init() { }
 
     func fetchToDoList (date: Date? = nil) -> [ToDoItem] {
@@ -35,5 +37,13 @@ final class ToDoManagerImp: ToDoManager {
 
     func remove(with date: Date) {
         toDoList.removeAll(where: {$0.createDate == date })
+    }
+
+    func getMockModel() -> ToDoItem {
+        var timeInt = Date().timeIntervalSince1970
+        timeInt += (60 * 60 * 24 * 10)
+        let experationDate = Date(timeIntervalSince1970: timeInt)
+        return
+            .init(createDate: Date(), actionDate: experationDate, name: "Сделать HW ", subscribe: "Сделать мокковую модель")
     }
 }
