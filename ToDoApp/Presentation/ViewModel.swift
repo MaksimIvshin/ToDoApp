@@ -8,63 +8,58 @@
 import UIKit
 
 final class ViewModel: UIView {
-
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        return
-        label
+        return label
     }()
-
+    
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        return
-        label
+        return label
     }()
-
+    
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        return
-        label
+        return label
     }()
-
+    
     private lazy var actionDateLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .right
-        return
-        label
+        return label
     }()
-
+    
     private lazy var statusLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .right
-        return
-        label
+        label.textAlignment = .left
+        return label
     }()
-
+    
     func configure(model: ToDoItem) {
-        backgroundColor = .red
+        backgroundColor = .lightGray
         nameLabel.text = model.name
         descriptionLabel.text = model.subscribe
-        dateLabel.text = model.createDate.createDate()
+        dateLabel.text = "Start: \(model.createDate.createDate())"
         actionDateLabel.text = "Deadline: \(model.actionDate.createDate())"
         statusLabel.text = "Status: \(model.state.rawValue)"
         addSubviews()
         setupConstraints()
     }
-
+    
     func addSubviews() {
         addSubview(nameLabel)
         addSubview(descriptionLabel)
@@ -72,37 +67,55 @@ final class ViewModel: UIView {
         addSubview(actionDateLabel)
         addSubview(statusLabel)
     }
-
+    
     func setupConstraints() {
-        nameLabel.backgroundColor = .blue
+        nameLabel.layer.masksToBounds = true
+        nameLabel.layer.borderWidth = 1
+        nameLabel.layer.cornerRadius = 7
+        nameLabel.backgroundColor = .white
         nameLabel.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(15)
             $0.top.equalToSuperview().inset(5)
             $0.trailing.greaterThanOrEqualToSuperview().inset(15)
+            $0.height.equalTo(50)
         }
-        descriptionLabel.backgroundColor = .green
+        descriptionLabel.layer.masksToBounds = true
+        descriptionLabel.layer.borderWidth = 1
+        descriptionLabel.layer.cornerRadius = 7
+        descriptionLabel.backgroundColor = .white
+        descriptionLabel.numberOfLines = 0
         descriptionLabel.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(15)
+            $0.leading.trailing.equalToSuperview().inset(15)
             $0.top.equalTo(nameLabel.snp.bottom).inset(-5)
-            $0.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(50)
         }
+        dateLabel.layer.masksToBounds = true
+        dateLabel.layer.borderWidth = 1
+        dateLabel.layer.cornerRadius = 7
         dateLabel.backgroundColor = .white
         dateLabel.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(15)
             $0.top.equalTo(descriptionLabel.snp.bottom).inset(-5)
-
+            $0.height.equalTo(50)
         }
-        actionDateLabel.backgroundColor = .cyan
+        actionDateLabel.layer.masksToBounds = true
+        actionDateLabel.layer.borderWidth = 1
+        actionDateLabel.layer.cornerRadius = 7
+        actionDateLabel.backgroundColor = .white
         actionDateLabel.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(15)
             $0.top.equalTo(descriptionLabel.snp.bottom).inset(-5)
-
+            $0.height.equalTo(50)
         }
-        statusLabel.backgroundColor = .purple
+        statusLabel.layer.masksToBounds = true
+        statusLabel.layer.borderWidth = 1
+        statusLabel.layer.cornerRadius = 7
+        statusLabel.backgroundColor = .white
         statusLabel.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(15)
+            $0.leading.trailing.equalToSuperview().inset(15)
             $0.top.equalTo(dateLabel.snp.bottom).inset(-5)
             $0.bottom.equalToSuperview().inset(5)
+            $0.height.equalTo(50)
         }
     }
 }

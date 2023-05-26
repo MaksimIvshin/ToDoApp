@@ -14,6 +14,12 @@
 		9206E24D2A169B6A003962D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9206E24B2A169B6A003962D3 /* Main.storyboard */; };
 		9206E24F2A169B6B003962D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9206E24E2A169B6B003962D3 /* Assets.xcassets */; };
 		9206E2522A169B6B003962D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9206E2502A169B6B003962D3 /* LaunchScreen.storyboard */; };
+		922AC9812A1F6BB1005F5A00 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922AC97F2A1F6BB1005F5A00 /* AddViewController.swift */; };
+		922AC9822A1F6BB1005F5A00 /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922AC9802A1F6BB1005F5A00 /* AddViewController.xib */; };
+		922AC9852A1F84F9005F5A00 /* AvoidingKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922AC9842A1F84F9005F5A00 /* AvoidingKeyboard.swift */; };
+		922AC9872A1F8529005F5A00 /* HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922AC9862A1F8529005F5A00 /* HideKeyboard.swift */; };
+		922AC9892A1F8572005F5A00 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922AC9882A1F8572005F5A00 /* BaseViewController.swift */; };
+		922AC98C2A1F89DA005F5A00 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922AC98B2A1F89DA005F5A00 /* NibLoadable.swift */; };
 		925B89D62A16A6800092EE2F /* LaunchScreenClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925B89D52A16A6800092EE2F /* LaunchScreenClass.swift */; };
 		925B89DD2A1CBA030092EE2F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925B89DC2A1CBA030092EE2F /* ViewModel.swift */; };
 		925B89DF2A1CBB3A0092EE2F /* DateToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925B89DE2A1CBB3A0092EE2F /* DateToString.swift */; };
@@ -32,6 +38,12 @@
 		9206E24E2A169B6B003962D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9206E2512A169B6B003962D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9206E2532A169B6B003962D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		922AC97F2A1F6BB1005F5A00 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		922AC9802A1F6BB1005F5A00 /* AddViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddViewController.xib; sourceTree = "<group>"; };
+		922AC9842A1F84F9005F5A00 /* AvoidingKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvoidingKeyboard.swift; sourceTree = "<group>"; };
+		922AC9862A1F8529005F5A00 /* HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboard.swift; sourceTree = "<group>"; };
+		922AC9882A1F8572005F5A00 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		922AC98B2A1F89DA005F5A00 /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		925B89D52A16A6800092EE2F /* LaunchScreenClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenClass.swift; sourceTree = "<group>"; };
 		925B89DC2A1CBA030092EE2F /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		925B89DE2A1CBB3A0092EE2F /* DateToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateToString.swift; sourceTree = "<group>"; };
@@ -92,18 +104,57 @@
 			children = (
 				9206E2452A169B6A003962D3 /* AppDelegate.swift */,
 				9206E2472A169B6A003962D3 /* SceneDelegate.swift */,
-				9206E2492A169B6A003962D3 /* ViewController.swift */,
+				922AC98A2A1F8593005F5A00 /* BaseObjects */,
+				922AC98F2A20A5EF005F5A00 /* Presentation */,
 				92726ED82A169DBC00A92B67 /* ToDoManager.swift */,
-				925B89DC2A1CBA030092EE2F /* ViewModel.swift */,
 				92726ED62A169D7B00A92B67 /* ToDoItem.swift */,
-				925B89DE2A1CBB3A0092EE2F /* DateToString.swift */,
+				922AC9902A20A6AE005F5A00 /* Extension */,
 				925B89D52A16A6800092EE2F /* LaunchScreenClass.swift */,
+				9206E2502A169B6B003962D3 /* LaunchScreen.storyboard */,
 				9206E24B2A169B6A003962D3 /* Main.storyboard */,
 				9206E24E2A169B6B003962D3 /* Assets.xcassets */,
-				9206E2502A169B6B003962D3 /* LaunchScreen.storyboard */,
 				9206E2532A169B6B003962D3 /* Info.plist */,
 			);
 			path = ToDoApp;
+			sourceTree = "<group>";
+		};
+		922AC9832A1F6EE8005F5A00 /* AddView */ = {
+			isa = PBXGroup;
+			children = (
+				922AC97F2A1F6BB1005F5A00 /* AddViewController.swift */,
+				922AC9802A1F6BB1005F5A00 /* AddViewController.xib */,
+			);
+			name = AddView;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		922AC98A2A1F8593005F5A00 /* BaseObjects */ = {
+			isa = PBXGroup;
+			children = (
+				922AC9842A1F84F9005F5A00 /* AvoidingKeyboard.swift */,
+				922AC98B2A1F89DA005F5A00 /* NibLoadable.swift */,
+				922AC9862A1F8529005F5A00 /* HideKeyboard.swift */,
+				922AC9882A1F8572005F5A00 /* BaseViewController.swift */,
+			);
+			path = BaseObjects;
+			sourceTree = "<group>";
+		};
+		922AC98F2A20A5EF005F5A00 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				922AC9832A1F6EE8005F5A00 /* AddView */,
+				9206E2492A169B6A003962D3 /* ViewController.swift */,
+				925B89DC2A1CBA030092EE2F /* ViewModel.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		922AC9902A20A6AE005F5A00 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				925B89DE2A1CBB3A0092EE2F /* DateToString.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +219,7 @@
 			files = (
 				9206E2522A169B6B003962D3 /* LaunchScreen.storyboard in Resources */,
 				9206E24F2A169B6B003962D3 /* Assets.xcassets in Resources */,
+				922AC9822A1F6BB1005F5A00 /* AddViewController.xib in Resources */,
 				9206E24D2A169B6A003962D3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,13 +273,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922AC9872A1F8529005F5A00 /* HideKeyboard.swift in Sources */,
 				9206E24A2A169B6A003962D3 /* ViewController.swift in Sources */,
 				9206E2462A169B6A003962D3 /* AppDelegate.swift in Sources */,
+				922AC9812A1F6BB1005F5A00 /* AddViewController.swift in Sources */,
 				92726ED72A169D7B00A92B67 /* ToDoItem.swift in Sources */,
+				922AC9892A1F8572005F5A00 /* BaseViewController.swift in Sources */,
 				925B89D62A16A6800092EE2F /* LaunchScreenClass.swift in Sources */,
+				922AC9852A1F84F9005F5A00 /* AvoidingKeyboard.swift in Sources */,
 				9206E2482A169B6A003962D3 /* SceneDelegate.swift in Sources */,
 				925B89DF2A1CBB3A0092EE2F /* DateToString.swift in Sources */,
 				92726ED92A169DBC00A92B67 /* ToDoManager.swift in Sources */,
+				922AC98C2A1F89DA005F5A00 /* NibLoadable.swift in Sources */,
 				925B89DD2A1CBA030092EE2F /* ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
