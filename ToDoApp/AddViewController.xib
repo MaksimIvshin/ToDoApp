@@ -31,14 +31,14 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XpY-6V-q9e">
-                    <rect key="frame" x="135" y="316" width="105" height="35"/>
+                    <rect key="frame" x="30" y="582" width="315" height="35"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="Save ToDo"/>
                     <connections>
                         <action selector="saveHomeWork" destination="-1" eventType="touchUpInside" id="4qb-ja-8Qg"/>
                     </connections>
                 </button>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="DA1-A2-Q1J">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DA1-A2-Q1J">
                     <rect key="frame" x="20" y="100" width="335" height="100"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -66,13 +66,14 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="oTq-pR-MDj" secondAttribute="trailing" constant="20" id="1pl-Kg-A0Y"/>
                 <constraint firstItem="XAE-s0-DVx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="2x0-8g-mTu"/>
                 <constraint firstItem="DA1-A2-Q1J" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="3nK-0P-pZ5"/>
-                <constraint firstItem="XpY-6V-q9e" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="7HI-WI-oL1"/>
+                <constraint firstItem="XpY-6V-q9e" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="8Xj-gx-qv6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="DA1-A2-Q1J" secondAttribute="trailing" constant="20" id="ClD-2C-HTh"/>
                 <constraint firstItem="pee-t8-rJi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="Msl-h8-A0o"/>
                 <constraint firstItem="oTq-pR-MDj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="TmY-TZ-uwo"/>
                 <constraint firstItem="oTq-pR-MDj" firstAttribute="top" secondItem="XAE-s0-DVx" secondAttribute="bottom" constant="20" id="Wfg-no-QrK"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="XpY-6V-q9e" secondAttribute="bottom" constant="50" id="Z8y-ix-yuY"/>
                 <constraint firstItem="pee-t8-rJi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="bIw-Eo-Jtg"/>
-                <constraint firstItem="XpY-6V-q9e" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ib1-vG-VCA"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XpY-6V-q9e" secondAttribute="trailing" constant="30" id="eP1-hx-PGc"/>
                 <constraint firstItem="DA1-A2-Q1J" firstAttribute="top" secondItem="pee-t8-rJi" secondAttribute="bottom" constant="20" id="oko-Sm-M68"/>
                 <constraint firstItem="XAE-s0-DVx" firstAttribute="top" secondItem="DA1-A2-Q1J" secondAttribute="bottom" constant="20" id="p2q-9c-8e6"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XAE-s0-DVx" secondAttribute="trailing" constant="20" id="qQg-je-uGB"/>

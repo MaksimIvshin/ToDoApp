@@ -7,16 +7,17 @@
 
 import UIKit
 
-protocol AddViewControllerDelegate: AnyObject {
+protocol AddViewControllerDelegate: AnyObject  {
     func updateHomeWorks()
 }
 
-class AddViewController: BaseViewController, AvoidingKeyboard {
+class AddViewController: BaseViewController, AvoidingKeyboard, UITextViewDelegate {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var subscribeTextView: UITextView!
     @IBOutlet weak var datePicker: UIDatePicker!
 
     weak var delegate: AddViewControllerDelegate?
+    let placeholderText = "Description"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,27 @@ class AddViewController: BaseViewController, AvoidingKeyboard {
         subscribeTextView.layer.cornerRadius = 7
         nameTextField.delegate = self
         datePicker.minimumDate = Date()
+        setupTextView()
+    }
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .lightGray {
+            textView.text = ""
+            textView.textColor = .black
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            textView.text = placeholderText
+            textView.textColor = .lightGray
+        }
+    }
+
+    func setupTextView() {
+        subscribeTextView.text = placeholderText
+        subscribeTextView.delegate = self
+        subscribeTextView.textColor = .lightGray
     }
 
     func saveList() {
@@ -57,8 +79,6 @@ class AddViewController: BaseViewController, AvoidingKeyboard {
         }
     }
 }
-
-
 
 extension AddViewController: UITextFieldDelegate {
     func textField(

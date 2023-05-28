@@ -10,7 +10,8 @@ import UIKit
 final class ViewModel: UIView {
     
     private lazy var nameLabel: UILabel = {
-        let label = UILabel()
+        var label = UILabel()
+        label = PaddingLabel(withInsets: 0, 0, 10, 10)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -18,15 +19,17 @@ final class ViewModel: UIView {
     }()
     
     private lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 1
+        var label = UILabel()
+        label = PaddingLabel(withInsets: 0, 0, 10, 10)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         return label
     }()
     
     private lazy var dateLabel: UILabel = {
-        let label = UILabel()
+        var label = UILabel()
+        label = PaddingLabel(withInsets: 0, 0, 10, 10)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -34,7 +37,8 @@ final class ViewModel: UIView {
     }()
     
     private lazy var actionDateLabel: UILabel = {
-        let label = UILabel()
+        var label = UILabel()
+        label = PaddingLabel(withInsets: 0, 0, 10, 10)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .right
@@ -42,7 +46,8 @@ final class ViewModel: UIView {
     }()
     
     private lazy var statusLabel: UILabel = {
-        let label = UILabel()
+        var label = UILabel()
+        label = PaddingLabel(withInsets: 0, 0, 10, 10)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -59,7 +64,7 @@ final class ViewModel: UIView {
         addSubviews()
         setupConstraints()
     }
-    
+
     func addSubviews() {
         addSubview(nameLabel)
         addSubview(descriptionLabel)
@@ -74,21 +79,22 @@ final class ViewModel: UIView {
         nameLabel.layer.cornerRadius = 7
         nameLabel.backgroundColor = .white
         nameLabel.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(15)
+            $0.leading.trailing.equalToSuperview().inset(15)
             $0.top.equalToSuperview().inset(5)
-            $0.trailing.greaterThanOrEqualToSuperview().inset(15)
+            //      $0.trailing.greaterThanOrEqualToSuperview().inset(15)
             $0.height.equalTo(50)
         }
+
         descriptionLabel.layer.masksToBounds = true
         descriptionLabel.layer.borderWidth = 1
         descriptionLabel.layer.cornerRadius = 7
         descriptionLabel.backgroundColor = .white
-        descriptionLabel.numberOfLines = 0
         descriptionLabel.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.top.equalTo(nameLabel.snp.bottom).inset(-5)
             $0.height.equalTo(50)
         }
+
         dateLabel.layer.masksToBounds = true
         dateLabel.layer.borderWidth = 1
         dateLabel.layer.cornerRadius = 7
@@ -98,6 +104,7 @@ final class ViewModel: UIView {
             $0.top.equalTo(descriptionLabel.snp.bottom).inset(-5)
             $0.height.equalTo(50)
         }
+
         actionDateLabel.layer.masksToBounds = true
         actionDateLabel.layer.borderWidth = 1
         actionDateLabel.layer.cornerRadius = 7
@@ -107,6 +114,7 @@ final class ViewModel: UIView {
             $0.top.equalTo(descriptionLabel.snp.bottom).inset(-5)
             $0.height.equalTo(50)
         }
+
         statusLabel.layer.masksToBounds = true
         statusLabel.layer.borderWidth = 1
         statusLabel.layer.cornerRadius = 7
@@ -118,4 +126,54 @@ final class ViewModel: UIView {
             $0.height.equalTo(50)
         }
     }
+    
 }
+
+
+class PaddingLabel: UILabel {
+
+    var topInset: CGFloat
+    var bottomInset: CGFloat
+    var leftInset: CGFloat
+    var rightInset: CGFloat
+
+    required init(withInsets top: CGFloat, _ bottom: CGFloat,_ left: CGFloat,_ right: CGFloat) {
+        self.topInset = top
+        self.bottomInset = bottom
+        self.leftInset = left
+        self.rightInset = right
+        super.init(frame: CGRect.zero)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
+    }
+
+    override var intrinsicContentSize: CGSize {
+        get {
+            var contentSize = super.intrinsicContentSize
+            contentSize.height += topInset + bottomInset
+            contentSize.width += leftInset + rightInset
+            return contentSize
+        }
+    }
+}
+
+//extension UILabel {
+//    func setMargins(margin: CGFloat = 10) {
+//        if let textString = self.text {
+//            let paragraphStyle = NSMutableParagraphStyle()
+//            paragraphStyle.tailIndent = 10
+//            paragraphStyle.firstLineHeadIndent = 10
+//            paragraphStyle.headIndent = 10
+//            let attributedString = NSMutableAttributedString(string: textString)
+//            attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+//            attributedText = attributedString
+//        }
+//    }
+//}

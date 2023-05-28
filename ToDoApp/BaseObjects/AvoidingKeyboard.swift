@@ -19,7 +19,7 @@ extension AvoidingKeyboard where Self: UIViewController {
             selector: #selector(onKeyboardFrameWillChangeNotificationReceived(_:)),
             name: UIResponder.keyboardWillChangeFrameNotification,
             object: nil
-        )
+        ) 
     }
 
     func stopAvoidingKeyboard() {
