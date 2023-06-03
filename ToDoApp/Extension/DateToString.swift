@@ -8,9 +8,23 @@
 import UIKit
 
 extension Date {
-    func  createDate() -> String {
+    enum DateFormat: String {
+        case iso = "yyyy-MM-dd'T'HH:mm:ssZ"
+        case simple = "MMM d, h:mm a"
+        case titleDate = "MMM d, yyyy"
+    }
+
+    var dateString: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
+        let dateFormat = "MMM d, h:mm a"
+        formatter.dateFormat = dateFormat
+        return formatter.string(from: self)
+    }
+
+    func create(with format: DateFormat) -> String {
+        let formatter = DateFormatter()
+        let dateFormat = format.rawValue
+        formatter.dateFormat = dateFormat
         return formatter.string(from: self)
     }
 }

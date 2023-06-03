@@ -19,9 +19,9 @@ extension AvoidingKeyboard where Self: UIViewController {
             selector: #selector(onKeyboardFrameWillChangeNotificationReceived(_:)),
             name: UIResponder.keyboardWillChangeFrameNotification,
             object: nil
-        ) 
+        )
     }
-
+    
     func stopAvoidingKeyboard() {
         NotificationCenter.default.removeObserver(
             self,
@@ -39,13 +39,13 @@ fileprivate extension UIViewController {
         let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
         let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
         let intersection = safeAreaFrame.intersection(keyboardFrameInView)
-
+        
         let keyboardAnimationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey]
         let animationDuration: TimeInterval = (keyboardAnimationDuration as? NSNumber)?.doubleValue ?? 0
         let animationCurveRawNSN = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
         let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
         let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
-
+        
         UIView.animate(
             withDuration: animationDuration,
             delay: 0,

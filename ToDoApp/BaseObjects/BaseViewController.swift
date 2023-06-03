@@ -7,7 +7,7 @@
 
 import UIKit
 class BaseViewController: UIViewController, HideKeyboardWhenTappedAround {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
@@ -15,21 +15,21 @@ class BaseViewController: UIViewController, HideKeyboardWhenTappedAround {
             vc.startAvoidingKeyboard()
         }
     }
-
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if let vc = self as? AvoidingKeyboard {
             vc.stopAvoidingKeyboard()
         }
     }
-
+    
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(
             target: self,
             action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(tap)
     }
-
+    
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }

@@ -58,13 +58,13 @@ final class ViewModel: UIView {
         backgroundColor = .lightGray
         nameLabel.text = model.name
         descriptionLabel.text = model.subscribe
-        dateLabel.text = "Start: \(model.createDate.createDate())"
-        actionDateLabel.text = "Deadline: \(model.actionDate.createDate())"
+        dateLabel.text = "Start: \(model.createDate.create(with: .titleDate))"
+        actionDateLabel.text = "Deadline: \(model.actionDate.create(with: .titleDate))"
         statusLabel.text = "Status: \(model.state.rawValue)"
         addSubviews()
         setupConstraints()
     }
-
+    
     func addSubviews() {
         addSubview(nameLabel)
         addSubview(descriptionLabel)
@@ -81,10 +81,10 @@ final class ViewModel: UIView {
         nameLabel.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.top.equalToSuperview().inset(5)
-            //      $0.trailing.greaterThanOrEqualToSuperview().inset(15)
+            //$0.trailing.greaterThanOrEqualToSuperview().inset(15)
             $0.height.equalTo(50)
         }
-
+        
         descriptionLabel.layer.masksToBounds = true
         descriptionLabel.layer.borderWidth = 1
         descriptionLabel.layer.cornerRadius = 7
@@ -94,7 +94,7 @@ final class ViewModel: UIView {
             $0.top.equalTo(nameLabel.snp.bottom).inset(-5)
             $0.height.equalTo(50)
         }
-
+        
         dateLabel.layer.masksToBounds = true
         dateLabel.layer.borderWidth = 1
         dateLabel.layer.cornerRadius = 7
@@ -104,7 +104,7 @@ final class ViewModel: UIView {
             $0.top.equalTo(descriptionLabel.snp.bottom).inset(-5)
             $0.height.equalTo(50)
         }
-
+        
         actionDateLabel.layer.masksToBounds = true
         actionDateLabel.layer.borderWidth = 1
         actionDateLabel.layer.cornerRadius = 7
@@ -114,7 +114,7 @@ final class ViewModel: UIView {
             $0.top.equalTo(descriptionLabel.snp.bottom).inset(-5)
             $0.height.equalTo(50)
         }
-
+        
         statusLabel.layer.masksToBounds = true
         statusLabel.layer.borderWidth = 1
         statusLabel.layer.cornerRadius = 7
@@ -126,17 +126,16 @@ final class ViewModel: UIView {
             $0.height.equalTo(50)
         }
     }
-    
 }
 
 
 class PaddingLabel: UILabel {
-
+    
     var topInset: CGFloat
     var bottomInset: CGFloat
     var leftInset: CGFloat
     var rightInset: CGFloat
-
+    
     required init(withInsets top: CGFloat, _ bottom: CGFloat,_ left: CGFloat,_ right: CGFloat) {
         self.topInset = top
         self.bottomInset = bottom
@@ -144,16 +143,16 @@ class PaddingLabel: UILabel {
         self.rightInset = right
         super.init(frame: CGRect.zero)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func drawText(in rect: CGRect) {
         let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
         super.drawText(in: rect.inset(by: insets))
     }
-
+    
     override var intrinsicContentSize: CGSize {
         get {
             var contentSize = super.intrinsicContentSize
@@ -163,17 +162,3 @@ class PaddingLabel: UILabel {
         }
     }
 }
-
-//extension UILabel {
-//    func setMargins(margin: CGFloat = 10) {
-//        if let textString = self.text {
-//            let paragraphStyle = NSMutableParagraphStyle()
-//            paragraphStyle.tailIndent = 10
-//            paragraphStyle.firstLineHeadIndent = 10
-//            paragraphStyle.headIndent = 10
-//            let attributedString = NSMutableAttributedString(string: textString)
-//            attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
-//            attributedText = attributedString
-//        }
-//    }
-//}

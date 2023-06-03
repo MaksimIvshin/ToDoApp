@@ -19,7 +19,7 @@ extension NibLoadable where Self: UIView {
             return self.init()
         }
     }
-
+    
     static func nib() -> UINib {
         let bundle = Bundle(for: self)
         let nibName = Self.description()
@@ -34,7 +34,7 @@ extension NibLoadable where Self: UIViewController {
         result.viewDidLoad()
         return result
     }
-
+    
     static func nib() -> UINib {
         let bundle = Bundle(for: self)
         let nibName = String(describing: self)

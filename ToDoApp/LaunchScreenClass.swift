@@ -20,9 +20,10 @@ class LaunchScreenClass: UIViewController {
             self.logoToDo.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             self.logoToDo.layer.cornerRadius = 15
         } completion: { _ in
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "MainSID")
-            vc?.modalPresentationStyle = .fullScreen
-            self.present(vc!, animated: false, completion: nil)
+            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "MainSID") {
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: false, completion: nil)
+            }
         }
     }
 }
