@@ -25,6 +25,7 @@ extension Date {
         let formatter = DateFormatter()
         let dateFormat = format.rawValue
         formatter.dateFormat = dateFormat
+        formatter.locale = Locale(identifier: "US")
         return formatter.string(from: self)
     }
 }

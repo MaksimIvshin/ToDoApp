@@ -33,13 +33,13 @@ class AddToDoController: BaseViewController,
     
     lazy var separator: UILabel = {
         let separator = UILabel()
-        separator.backgroundColor = Resources.Colors.separator
+        separator.backgroundColor = Resources.Colors.separatofForNewTask
         separator.layer.cornerRadius = 4
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
 
-    lazy var separator2: UILabel = {
+    lazy var separatorForNameTF: UILabel = {
         let separator = UILabel()
         separator.backgroundColor = Resources.Colors.separator
         separator.layer.cornerRadius = 4
@@ -47,7 +47,7 @@ class AddToDoController: BaseViewController,
         return separator
     }()
 
-    lazy var separator3: UILabel = {
+    lazy var separatorForDescriptionTV: UILabel = {
         let separator = UILabel()
         separator.backgroundColor = Resources.Colors.separator
         separator.layer.cornerRadius = 4
@@ -55,15 +55,14 @@ class AddToDoController: BaseViewController,
         return separator
     }()
 
-    lazy var separator4: UILabel = {
+    lazy var separatorForDateTF: UILabel = {
         let separator = UILabel()
-        separator.backgroundColor = Resources.Colors.separator
+        separator.backgroundColor = Resources.Colors.buttonSave
         separator.layer.cornerRadius = 4
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
 
-    
     lazy var nameTF: UITextField = {
         let tf = UITextField()
         tf.backgroundColor = Resources.Colors.nameSubscribeDate
@@ -71,7 +70,7 @@ class AddToDoController: BaseViewController,
         tf.layer.cornerRadius = 4
         tf.delegate = self
         tf.translatesAutoresizingMaskIntoConstraints = false
-        tf.addSubview(separator2)
+        tf.addSubview(separatorForNameTF)
         tf.snp.makeConstraints {
             $0.height.equalTo(56)
         }
@@ -84,7 +83,6 @@ class AddToDoController: BaseViewController,
         tv.font = UIFont.systemFont(ofSize: 17)
         tv.layer.cornerRadius = 4
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.addSubview(separator3)
         tv.snp.makeConstraints {
             $0.height.equalTo(56)
         }
@@ -95,16 +93,26 @@ class AddToDoController: BaseViewController,
         let tf = UITextField()
         tf.backgroundColor = Resources.Colors.nameSubscribeDate
         tf.layer.cornerRadius = 4
-        tf.placeholder = "Tap here to enter your deadline"
+        tf.placeholder = Date().create(with: .titleDate).capitalized
         tf.inputView = dPicker
+        tf.addSubview(imageCalendar)
         tf.inputAccessoryView = toolBar
         tf.translatesAutoresizingMaskIntoConstraints = false
-        tf.addSubview(separator4)
+        tf.addSubview(separatorForDateTF)
         tf.snp.makeConstraints {
             $0.height.equalTo(56)
         }
         return tf
     }()
+
+    lazy var imageCalendar: UIImageView = {
+        var image = UIImageView()
+        image.image = Resources.Images.calendar
+        image.translatesAutoresizingMaskIntoConstraints = true
+        return image
+    }()
+
+
     
     lazy var toolBar: UIToolbar = {
         let tb = UIToolbar()
@@ -165,6 +173,7 @@ class AddToDoController: BaseViewController,
         scroll.addSubview(stack)
         view.addSubview(newTaskTitle)
         view.addSubview(separator)
+        view.addSubview(separatorForDescriptionTV)
 
         configure()
         setupConstraints()
@@ -183,22 +192,28 @@ class AddToDoController: BaseViewController,
             $0.bottom.equalTo(scroll.snp.top).inset(26)
         }
 
-        separator2.snp.makeConstraints {
+        separatorForNameTF.snp.makeConstraints {
             $0.leading.trailing.equalTo(nameTF)
             $0.bottom.equalTo(nameTF)
             $0.height.equalTo(2)
         }
 
-        separator3.snp.makeConstraints {
+        separatorForDescriptionTV.snp.makeConstraints {
             $0.leading.trailing.equalTo(descripitonTV)
             $0.bottom.equalTo(descripitonTV)
             $0.height.equalTo(2)
         }
 
-        separator4.snp.makeConstraints {
+        separatorForDateTF.snp.makeConstraints {
             $0.leading.trailing.equalTo(dateTF)
             $0.bottom.equalTo(dateTF)
             $0.height.equalTo(2)
+        }
+
+        imageCalendar.snp.makeConstraints {
+            $0.trailing.equalTo(dateTF).inset(15)
+            $0.top.equalTo(dateTF).inset(19)
+            $0.bottom.equalTo(dateTF).inset(17)
         }
         
         scroll.snp.makeConstraints {
