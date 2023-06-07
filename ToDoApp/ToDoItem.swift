@@ -8,8 +8,7 @@
 import UIKit
 
 enum ToDoItemState: String {
-    case expired
-    case snoozed
+    case done
     case waiting
 }
 

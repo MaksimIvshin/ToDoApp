@@ -13,7 +13,6 @@ extension UITableView {
             assertionFailure("unable to dequeue cell with identifier \(T.identifier)")
             return nil
         }
-
         return cell
     }
 
@@ -30,4 +29,3 @@ extension UITableView {
         })
     }
 }
-

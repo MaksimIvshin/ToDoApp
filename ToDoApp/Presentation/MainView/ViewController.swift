@@ -21,8 +21,6 @@ class ViewController: UIViewController {
         return date
     }()
     
-    
-    
     private lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.backgroundColor = .gray
@@ -39,10 +37,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addSubview(dateLabel)
         view.addSubview(tableView)
-        
         setupConstraints()
         customizeNavigationBar()
         initTableView()
@@ -106,12 +102,5 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let model = models[indexPath.row]
         customCell.configure(with: model)
         return customCell
-    }
-    
-    func tableView(
-        _ tableView: UITableView,
-        didSelectRowAt indexPath: IndexPath
-    ) {
-        print(indexPath)
     }
 }

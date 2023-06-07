@@ -15,7 +15,6 @@ protocol ToDoManager {
     func remove(with date: Date)
 }
 
-
 final class ToDoManagerImp: ToDoManager {
     
     static let shared = ToDoManagerImp()

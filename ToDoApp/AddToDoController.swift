@@ -83,11 +83,19 @@ class AddToDoController: BaseViewController,
         tv.font = UIFont.systemFont(ofSize: 17)
         tv.layer.cornerRadius = 4
         tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.addSubview(placeHolderForDescriprionTV)
         tv.snp.makeConstraints {
             $0.height.equalTo(56)
         }
         return tv
     }()
+
+    lazy var placeHolderForDescriprionTV: UILabel = {
+        let label = UILabel()
+        label.text = placeholderText
+        label.textColor = Resources.Colors.separator
+        return label
+    } ()
     
     lazy var dateTF: UITextField = {
         let tf = UITextField()
@@ -112,8 +120,6 @@ class AddToDoController: BaseViewController,
         return image
     }()
 
-
-    
     lazy var toolBar: UIToolbar = {
         let tb = UIToolbar()
         tb.barStyle = UIBarStyle.default
@@ -168,17 +174,26 @@ class AddToDoController: BaseViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addViews()
+        configure()
+        setupConstraints()
+
+//        if traitCollection.userInterfaceStyle == .dark {
+//            view.backgroundColor = .blue
+//        } else if traitCollection.userInterfaceStyle == .light{
+//            view.backgroundColor = .black
+//        }
+    }
+
+    private func addViews() {
         view.addSubview(saveButton)
         view.addSubview(scroll)
         scroll.addSubview(stack)
         view.addSubview(newTaskTitle)
         view.addSubview(separator)
         view.addSubview(separatorForDescriptionTV)
-
-        configure()
-        setupConstraints()
     }
-    
+
     private func setupConstraints() {
         newTaskTitle.snp.makeConstraints {
             $0.top.equalToSuperview().inset(105)
@@ -202,6 +217,11 @@ class AddToDoController: BaseViewController,
             $0.leading.trailing.equalTo(descripitonTV)
             $0.bottom.equalTo(descripitonTV)
             $0.height.equalTo(2)
+        }
+
+        placeHolderForDescriprionTV.snp.makeConstraints{
+            $0.leading.equalToSuperview()
+            $0.top.centerY.equalTo(descripitonTV)
         }
 
         separatorForDateTF.snp.makeConstraints {
@@ -240,26 +260,17 @@ class AddToDoController: BaseViewController,
         stack.addArrangedSubview(nameTF)
         stack.addArrangedSubview(descripitonTV)
         stack.addArrangedSubview(dateTF)
-        
         descripitonTV.delegate = self
-        descripitonTV.text = placeholderText
-        descripitonTV.textColor = UIColor.lightGray
-
         view.backgroundColor = Resources.Colors.backgroundAddView
     }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if descripitonTV.textColor == .lightGray {
-            descripitonTV.text = ""
-            descripitonTV.textColor = .black
+
+    func textViewDidChange(_ textView: UITextView) {
+        guard let descripitonLabel = descripitonTV.text, !descripitonLabel.isEmpty
+        else {
+            placeHolderForDescriprionTV.isHidden = false
+            return
         }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if descripitonTV.text == "" {
-            descripitonTV.text = placeholderText
-            descripitonTV.textColor = .lightGray
-        }
+        placeHolderForDescriprionTV.isHidden = true
     }
     
     @objc private func dpClose (_ sender: UIBarButtonItem) {
@@ -267,15 +278,14 @@ class AddToDoController: BaseViewController,
     }
     
     @objc private func pickerChanged(_ sender: UIDatePicker) {
-        dateTF.text = sender.date.create(with: .iso)
+        dateTF.text = sender.date.create(with: .simple)
     }
     
     func saveList() {
         let newToDo = ToDoItem(createDate: Date(), actionDate: dPicker.date, name: nameTF.text ?? "", subscribe: descripitonTV.text ?? "")
         ToDoManagerImp.shared.save(toDoItem: newToDo)
-        self.dismiss(animated: true) {
-            self.delegate?.updateHomeWorks()
-        }
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.updateHomeWorks()
     }
     
     @objc func saveHomeWork() {

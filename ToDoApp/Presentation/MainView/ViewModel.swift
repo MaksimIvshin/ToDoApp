@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class ViewModel: UIView {
     
@@ -44,7 +45,15 @@ final class ViewModel: UIView {
         label.textAlignment = .right
         return label
     }()
-    
+
+    private lazy var toggle: UISwitch = {
+        let toggle = UISwitch()
+        toggle.isOn = false
+        toggle.translatesAutoresizingMaskIntoConstraints = false
+        toggle.addTarget(self, action: #selector(statusChange), for: .valueChanged)
+        return toggle
+    }()
+
     private lazy var statusLabel: UILabel = {
         var label = UILabel()
         label = PaddingLabel(withInsets: 0, 0, 10, 10)
@@ -58,8 +67,8 @@ final class ViewModel: UIView {
         backgroundColor = .lightGray
         nameLabel.text = model.name
         descriptionLabel.text = model.subscribe
-        dateLabel.text = "Start: \(model.createDate.create(with: .titleDate))"
-        actionDateLabel.text = "Deadline: \(model.actionDate.create(with: .titleDate))"
+        dateLabel.text = "Start: \(model.createDate.create(with: .simple))"
+        actionDateLabel.text = "Deadline: \(model.actionDate.create(with: .simple))"
         statusLabel.text = "Status: \(model.state.rawValue)"
         addSubviews()
         setupConstraints()
@@ -71,6 +80,7 @@ final class ViewModel: UIView {
         addSubview(dateLabel)
         addSubview(actionDateLabel)
         addSubview(statusLabel)
+        addSubview(toggle)
     }
     
     func setupConstraints() {
@@ -81,7 +91,6 @@ final class ViewModel: UIView {
         nameLabel.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.top.equalToSuperview().inset(5)
-            //$0.trailing.greaterThanOrEqualToSuperview().inset(15)
             $0.height.equalTo(50)
         }
         
@@ -124,6 +133,19 @@ final class ViewModel: UIView {
             $0.top.equalTo(dateLabel.snp.bottom).inset(-5)
             $0.bottom.equalToSuperview().inset(5)
             $0.height.equalTo(50)
+        }
+
+        toggle.snp.makeConstraints {
+            $0.trailing.equalTo(statusLabel).inset(15)
+            $0.top.equalTo(statusLabel).inset(10)
+        }
+    }
+    
+    @objc private func statusChange(_ sender: UISwitch) {
+        if sender.isOn == true {
+            statusLabel.text = "Status: \(ToDoItemState.done.rawValue)"
+        } else {
+            statusLabel.text = "Status: \(ToDoItemState.waiting.rawValue)"
         }
     }
 }
