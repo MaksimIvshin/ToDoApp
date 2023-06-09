@@ -118,7 +118,7 @@
 		F4CBE69DD3B611E4180FCBDD8CDE8814 /* Debugging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debugging.swift; path = Sources/Debugging.swift; sourceTree = "<group>"; };
 		F55D2A11C17BBCE3C9F7F0BA9555B5AE /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Sources/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 		F57C38722D9F65992CF2200038C8651E /* ConstraintMakerEditable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerEditable.swift; path = Sources/ConstraintMakerEditable.swift; sourceTree = "<group>"; };
-		F9B1CC4A4BA726F5E9F54D499A011908 /* Pods-ToDoApp */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-ToDoApp"; path = Pods_ToDoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9B1CC4A4BA726F5E9F54D499A011908 /* Pods_ToDoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE5693124BFA9269D2085EC1ADFAAD76 /* ConstraintInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsetTarget.swift; path = Sources/ConstraintInsetTarget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -204,7 +204,7 @@
 		CF6AA5B9A7C32A93F801D87012455CCE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F9B1CC4A4BA726F5E9F54D499A011908 /* Pods-ToDoApp */,
+				F9B1CC4A4BA726F5E9F54D499A011908 /* Pods_ToDoApp.framework */,
 				979486118B3E90C08386079D57962701 /* SnapKit.framework */,
 			);
 			name = Products;
@@ -327,7 +327,7 @@
 			);
 			name = "Pods-ToDoApp";
 			productName = Pods_ToDoApp;
-			productReference = F9B1CC4A4BA726F5E9F54D499A011908 /* Pods-ToDoApp */;
+			productReference = F9B1CC4A4BA726F5E9F54D499A011908 /* Pods_ToDoApp.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -456,6 +456,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp-Info.plist";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -561,6 +562,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp-Info.plist";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -661,6 +663,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SnapKit/SnapKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SnapKit/SnapKit-Info.plist";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -697,6 +700,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SnapKit/SnapKit-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/SnapKit/SnapKit-Info.plist";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
