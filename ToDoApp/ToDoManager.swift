@@ -12,14 +12,14 @@ protocol ToDoManager {
     
     func fetchToDoList (date: Date? ) -> [ToDoItem]
     func save(toDoItem: ToDoItem)
-    func remove(with date: Date)
+    func remove()
 }
 
 final class ToDoManagerImp: ToDoManager {
-    
+
     static let shared = ToDoManagerImp()
     var toDoList: [ToDoItem] = []
-    
+
     private init() { }
     
     func fetchToDoList (date: Date? = nil) -> [ToDoItem] {
@@ -29,12 +29,24 @@ final class ToDoManagerImp: ToDoManager {
             return toDoList
         }
     }
-    
+
+    func saveData() {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(toDoList), forKey: "toDoItems")
+    }
+
     func save(toDoItem: ToDoItem) {
         toDoList.append(toDoItem)
+        saveData()
     }
-    
-    func remove(with date: Date) {
-        toDoList.removeAll(where: {$0.createDate == date })
+
+    func mySavedToDoItems() {
+        if let myToDoItems = UserDefaults.standard.value(forKey: "toDoItems") as? Data {
+            toDoList = try! PropertyListDecoder().decode(Array<ToDoItem>.self, from: myToDoItems)
+        }
+    }
+
+    func remove() {
+       // toDoList.removeAll(where: {$0.createDate == date })
+        UserDefaults.standard.removeObject(forKey: "toDoItems")
     }
 }

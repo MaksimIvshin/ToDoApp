@@ -20,20 +20,6 @@ enum Resources {
         static var separator = UIImage(named: "divider")
         static var buttonBack = UIImage(named: "Vector3")
         static var calendar = UIImage(named: "Calendar")
+        static var avatar = UIImage(named: "avatar")
     }
-
-    enum Theme: String {
-        case light, dark
-
-        var uiInterfaceStyle: UIUserInterfaceStyle {
-            switch self {
-            case .light:
-                return .light
-            case .dark:
-                return .dark
-
-            }
-        }
-    }
-    
 }

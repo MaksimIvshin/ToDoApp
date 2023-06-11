@@ -9,10 +9,16 @@ import UIKit
 import SnapKit
 
 final class ViewModel: UIView {
+
+    private lazy var stackWithItems: UIView = {
+        var stack = UIView()
+        stack.backgroundColor = .blue
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
     
     private lazy var nameLabel: UILabel = {
         var label = UILabel()
-        label = PaddingLabel(withInsets: 0, 0, 10, 10)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -21,8 +27,7 @@ final class ViewModel: UIView {
     
     private lazy var descriptionLabel: UILabel = {
         var label = UILabel()
-        label = PaddingLabel(withInsets: 0, 0, 10, 10)
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         return label
@@ -30,7 +35,6 @@ final class ViewModel: UIView {
     
     private lazy var dateLabel: UILabel = {
         var label = UILabel()
-        label = PaddingLabel(withInsets: 0, 0, 10, 10)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -39,7 +43,6 @@ final class ViewModel: UIView {
     
     private lazy var actionDateLabel: UILabel = {
         var label = UILabel()
-        label = PaddingLabel(withInsets: 0, 0, 10, 10)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .right
@@ -56,7 +59,6 @@ final class ViewModel: UIView {
 
     private lazy var statusLabel: UILabel = {
         var label = UILabel()
-        label = PaddingLabel(withInsets: 0, 0, 10, 10)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -64,12 +66,12 @@ final class ViewModel: UIView {
     }()
     
     func configure(model: ToDoItem) {
-        backgroundColor = .lightGray
+        backgroundColor = .white
         nameLabel.text = model.name
         descriptionLabel.text = model.subscribe
         dateLabel.text = "Start: \(model.createDate.create(with: .simple))"
         actionDateLabel.text = "Deadline: \(model.actionDate.create(with: .simple))"
-        statusLabel.text = "Status: \(model.state.rawValue)"
+        statusLabel.text = "Status: \(model.state)"
         addSubviews()
         setupConstraints()
     }
@@ -85,102 +87,54 @@ final class ViewModel: UIView {
     
     func setupConstraints() {
         nameLabel.layer.masksToBounds = true
-        nameLabel.layer.borderWidth = 1
-        nameLabel.layer.cornerRadius = 7
         nameLabel.backgroundColor = .white
         nameLabel.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(15)
-            $0.top.equalToSuperview().inset(5)
-            $0.height.equalTo(50)
+            $0.top.equalToSuperview().inset(10)
         }
         
         descriptionLabel.layer.masksToBounds = true
-        descriptionLabel.layer.borderWidth = 1
-        descriptionLabel.layer.cornerRadius = 7
         descriptionLabel.backgroundColor = .white
         descriptionLabel.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(15)
-            $0.top.equalTo(nameLabel.snp.bottom).inset(-5)
-            $0.height.equalTo(50)
+            $0.top.equalTo(nameLabel.snp.bottom).inset(-10)
         }
         
         dateLabel.layer.masksToBounds = true
-        dateLabel.layer.borderWidth = 1
-        dateLabel.layer.cornerRadius = 7
         dateLabel.backgroundColor = .white
         dateLabel.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(15)
-            $0.top.equalTo(descriptionLabel.snp.bottom).inset(-5)
-            $0.height.equalTo(50)
+            $0.top.equalTo(descriptionLabel.snp.bottom).inset(-10)
         }
         
         actionDateLabel.layer.masksToBounds = true
-        actionDateLabel.layer.borderWidth = 1
-        actionDateLabel.layer.cornerRadius = 7
         actionDateLabel.backgroundColor = .white
         actionDateLabel.snp.makeConstraints{
-            $0.trailing.equalToSuperview().inset(15)
-            $0.top.equalTo(descriptionLabel.snp.bottom).inset(-5)
-            $0.height.equalTo(50)
+            $0.leading.equalToSuperview().inset(15)
+            $0.top.equalTo(dateLabel.snp.bottom).inset(-10)
         }
         
         statusLabel.layer.masksToBounds = true
-        statusLabel.layer.borderWidth = 1
-        statusLabel.layer.cornerRadius = 7
         statusLabel.backgroundColor = .white
         statusLabel.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(15)
-            $0.top.equalTo(dateLabel.snp.bottom).inset(-5)
-            $0.bottom.equalToSuperview().inset(5)
-            $0.height.equalTo(50)
+            $0.leading.equalToSuperview().inset(15)
+            $0.top.equalTo(actionDateLabel.snp.bottom).inset(-7)
+            $0.bottom.equalToSuperview().inset(10)
         }
 
         toggle.snp.makeConstraints {
-            $0.trailing.equalTo(statusLabel).inset(15)
-            $0.top.equalTo(statusLabel).inset(10)
+            $0.trailing.equalToSuperview().inset(15)
+            $0.top.equalTo(statusLabel).inset(0)
+            $0.bottom.equalTo(statusLabel).inset(0)
         }
     }
     
     @objc private func statusChange(_ sender: UISwitch) {
         if sender.isOn == true {
-            statusLabel.text = "Status: \(ToDoItemState.done.rawValue)"
+            statusLabel.text = "Status: \(ToDoItemState.Completed.rawValue)"
+          //  ToDoManagerImp.shared.saveData()
         } else {
-            statusLabel.text = "Status: \(ToDoItemState.waiting.rawValue)"
-        }
-    }
-}
-
-
-class PaddingLabel: UILabel {
-    
-    var topInset: CGFloat
-    var bottomInset: CGFloat
-    var leftInset: CGFloat
-    var rightInset: CGFloat
-    
-    required init(withInsets top: CGFloat, _ bottom: CGFloat,_ left: CGFloat,_ right: CGFloat) {
-        self.topInset = top
-        self.bottomInset = bottom
-        self.leftInset = left
-        self.rightInset = right
-        super.init(frame: CGRect.zero)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
-        super.drawText(in: rect.inset(by: insets))
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        get {
-            var contentSize = super.intrinsicContentSize
-            contentSize.height += topInset + bottomInset
-            contentSize.width += leftInset + rightInset
-            return contentSize
+            statusLabel.text = "Status: \(ToDoItemState.Incomplete.rawValue)"
         }
     }
 }

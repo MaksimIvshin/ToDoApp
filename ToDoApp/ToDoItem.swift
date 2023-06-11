@@ -8,14 +8,14 @@
 import UIKit
 
 enum ToDoItemState: String {
-    case done
-    case waiting
+    case Completed
+    case Incomplete
 }
 
-struct ToDoItem {
+struct ToDoItem: Codable {
     let createDate: Date
     var actionDate: Date
     var name: String
     var subscribe: String
-    var state: ToDoItemState = .waiting
+    var state: ToDoItemState.RawValue 
 }

@@ -25,7 +25,7 @@ class AddToDoController: BaseViewController,
     lazy var newTaskTitle: UILabel = {
         let ntLabel = UILabel()
         ntLabel.text = "New Task"
-        ntLabel.font = UIFont(name: "Arial", size: 32)
+        ntLabel.font = UIFont(name: "Inter-SemiBold", size: 32)
         ntLabel.backgroundColor = Resources.Colors.backgroundAddView
         ntLabel.translatesAutoresizingMaskIntoConstraints = false
         return ntLabel
@@ -177,12 +177,6 @@ class AddToDoController: BaseViewController,
         addViews()
         configure()
         setupConstraints()
-
-//        if traitCollection.userInterfaceStyle == .dark {
-//            view.backgroundColor = .blue
-//        } else if traitCollection.userInterfaceStyle == .light{
-//            view.backgroundColor = .black
-//        }
     }
 
     private func addViews() {
@@ -282,7 +276,11 @@ class AddToDoController: BaseViewController,
     }
     
     func saveList() {
-        let newToDo = ToDoItem(createDate: Date(), actionDate: dPicker.date, name: nameTF.text ?? "", subscribe: descripitonTV.text ?? "")
+        let newToDo = ToDoItem(createDate: Date(),
+                               actionDate: dPicker.date,
+                               name: nameTF.text ?? "",
+                               subscribe: descripitonTV.text ?? "",
+                               state: ToDoItemState.Incomplete.rawValue)
         ToDoManagerImp.shared.save(toDoItem: newToDo)
         self.navigationController?.popViewController(animated: true)
         self.delegate?.updateHomeWorks()
