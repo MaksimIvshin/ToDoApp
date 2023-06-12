@@ -34,7 +34,7 @@ class ViewController: UIViewController {
     private lazy var completeLabel: UILabel = {
         let date = UILabel()
         date.backgroundColor = .white
-        // как менять в рантайме?
+        // как менять в рантайме??
         date.text =  "\(ToDoManagerImp.shared.toDoList.count) incomplete, 0 completed"
         date.font = UIFont(name: "Inter-SemiBold", size: 14)
         date.translatesAutoresizingMaskIntoConstraints = false
