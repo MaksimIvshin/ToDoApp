@@ -9,7 +9,9 @@ import UIKit
 import SnapKit
 
 final class ViewModel: UIView {
-
+    
+    var date: Date?
+    
     private lazy var stackWithItems: UIView = {
         var stack = UIView()
         stack.backgroundColor = .blue
@@ -48,7 +50,7 @@ final class ViewModel: UIView {
         label.textAlignment = .right
         return label
     }()
-
+    
     private lazy var toggle: UISwitch = {
         let toggle = UISwitch()
         toggle.isOn = false
@@ -56,7 +58,7 @@ final class ViewModel: UIView {
         toggle.addTarget(self, action: #selector(statusChange), for: .valueChanged)
         return toggle
     }()
-
+    
     private lazy var statusLabel: UILabel = {
         var label = UILabel()
         label.numberOfLines = 1
@@ -71,7 +73,9 @@ final class ViewModel: UIView {
         descriptionLabel.text = model.subscribe
         dateLabel.text = "Start: \(model.createDate.create(with: .simple))"
         actionDateLabel.text = "Deadline: \(model.actionDate.create(with: .simple))"
-        statusLabel.text = "Status: \(model.state)"
+        statusLabel.text = "Status: \(model.isFinished)"
+        date = model.createDate
+        toggle.setOn(model.isFinished, animated: false)
         addSubviews()
         setupConstraints()
     }
@@ -121,7 +125,7 @@ final class ViewModel: UIView {
             $0.top.equalTo(actionDateLabel.snp.bottom).inset(-7)
             $0.bottom.equalToSuperview().inset(10)
         }
-
+        
         toggle.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(15)
             $0.top.equalTo(statusLabel).inset(0)
@@ -130,11 +134,10 @@ final class ViewModel: UIView {
     }
     
     @objc private func statusChange(_ sender: UISwitch) {
-        if sender.isOn == true {
-            statusLabel.text = "Status: \(ToDoItemState.Completed.rawValue)"
-          //  ToDoManagerImp.shared.saveData()
-        } else {
-            statusLabel.text = "Status: \(ToDoItemState.Incomplete.rawValue)"
+        guard let date else {
+            assertionFailure("error - date not found")
+            return
         }
+        ToDoManagerImp.shared.toggle(modelWith: date)
     }
 }

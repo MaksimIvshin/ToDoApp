@@ -21,7 +21,6 @@
 		925B89D62A16A6800092EE2F /* LaunchScreenClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925B89D52A16A6800092EE2F /* LaunchScreenClass.swift */; };
 		925B89DD2A1CBA030092EE2F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925B89DC2A1CBA030092EE2F /* ViewModel.swift */; };
 		925B89DF2A1CBB3A0092EE2F /* DateToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925B89DE2A1CBB3A0092EE2F /* DateToString.swift */; };
-		92726ED72A169D7B00A92B67 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92726ED62A169D7B00A92B67 /* ToDoItem.swift */; };
 		92726ED92A169DBC00A92B67 /* ToDoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92726ED82A169DBC00A92B67 /* ToDoManager.swift */; };
 		927E76082A33889F008B82A5 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 927E75FF2A33889E008B82A5 /* Inter-Medium.ttf */; };
 		927E76092A33889F008B82A5 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 927E76002A33889E008B82A5 /* Inter-Light.ttf */; };
@@ -32,6 +31,7 @@
 		927E760E2A33889F008B82A5 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 927E76052A33889F008B82A5 /* Inter-Bold.ttf */; };
 		927E760F2A33889F008B82A5 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 927E76062A33889F008B82A5 /* Inter-Black.ttf */; };
 		927E76102A33889F008B82A5 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 927E76072A33889F008B82A5 /* Inter-SemiBold.ttf */; };
+		927E761B2A3C6BBA008B82A5 /* MainControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927E761A2A3C6BBA008B82A5 /* MainControllerDataSource.swift */; };
 		92BF81882A27325700B1B5F1 /* AddToDoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BF81872A27325700B1B5F1 /* AddToDoController.swift */; };
 		92E1E5272A29F15700D832A1 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E1E5262A29F15700D832A1 /* UITableView+Extension.swift */; };
 		92E1E5292A29F17500D832A1 /* NSObject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E1E5282A29F17500D832A1 /* NSObject+Extension.swift */; };
@@ -58,7 +58,6 @@
 		925B89D52A16A6800092EE2F /* LaunchScreenClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenClass.swift; sourceTree = "<group>"; };
 		925B89DC2A1CBA030092EE2F /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		925B89DE2A1CBB3A0092EE2F /* DateToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateToString.swift; sourceTree = "<group>"; };
-		92726ED62A169D7B00A92B67 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
 		92726ED82A169DBC00A92B67 /* ToDoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoManager.swift; sourceTree = "<group>"; };
 		927E75FF2A33889E008B82A5 /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
 		927E76002A33889E008B82A5 /* Inter-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Light.ttf"; sourceTree = "<group>"; };
@@ -69,6 +68,7 @@
 		927E76052A33889F008B82A5 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
 		927E76062A33889F008B82A5 /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
 		927E76072A33889F008B82A5 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		927E761A2A3C6BBA008B82A5 /* MainControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainControllerDataSource.swift; sourceTree = "<group>"; };
 		92BF81872A27325700B1B5F1 /* AddToDoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDoController.swift; sourceTree = "<group>"; };
 		92E1E5262A29F15700D832A1 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		92E1E5282A29F17500D832A1 /* NSObject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Extension.swift"; sourceTree = "<group>"; };
@@ -133,7 +133,6 @@
 				922AC98A2A1F8593005F5A00 /* BaseObjects */,
 				922AC98F2A20A5EF005F5A00 /* Presentation */,
 				92726ED82A169DBC00A92B67 /* ToDoManager.swift */,
-				92726ED62A169D7B00A92B67 /* ToDoItem.swift */,
 				92E1E52F2A2A31A900D832A1 /* Resources */,
 				922AC9902A20A6AE005F5A00 /* Extension */,
 				925B89D52A16A6800092EE2F /* LaunchScreenClass.swift */,
@@ -207,6 +206,7 @@
 				92E1E52A2A29F26400D832A1 /* TableViewCell.swift */,
 				925B89DC2A1CBA030092EE2F /* ViewModel.swift */,
 				9206E2492A169B6A003962D3 /* ViewController.swift */,
+				927E761A2A3C6BBA008B82A5 /* MainControllerDataSource.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -349,7 +349,6 @@
 				9206E24A2A169B6A003962D3 /* ViewController.swift in Sources */,
 				9206E2462A169B6A003962D3 /* AppDelegate.swift in Sources */,
 				92E1E52E2A2A30F700D832A1 /* UIColor+Extension.swift in Sources */,
-				92726ED72A169D7B00A92B67 /* ToDoItem.swift in Sources */,
 				92BF81882A27325700B1B5F1 /* AddToDoController.swift in Sources */,
 				92E1E5292A29F17500D832A1 /* NSObject+Extension.swift in Sources */,
 				922AC9892A1F8572005F5A00 /* BaseViewController.swift in Sources */,
@@ -362,6 +361,7 @@
 				92E1E5312A2A31BF00D832A1 /* Resources.swift in Sources */,
 				922AC98C2A1F89DA005F5A00 /* NibLoadable.swift in Sources */,
 				925B89DD2A1CBA030092EE2F /* ViewModel.swift in Sources */,
+				927E761B2A3C6BBA008B82A5 /* MainControllerDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
