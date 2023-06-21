@@ -11,7 +11,6 @@ final class MainControllerDataSource {
     
     var completeCount: Int { completed.count }
     var notCompleteCount: Int { nonCompleted.count }
-    
     var completed: [ToDoItem]
     var nonCompleted: [ToDoItem]
     var numberOfSections = 2

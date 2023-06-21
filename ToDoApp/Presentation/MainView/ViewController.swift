@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import UserNotifications
+import NotificationCenter
 
 class ViewController: UIViewController {
     
@@ -136,7 +138,7 @@ class ViewController: UIViewController {
         }
         
         completedLabel.snp.makeConstraints {
-            $0.trailing.equalTo(incompleteLabel.snp.trailing).inset(16)
+            $0.trailing.equalTo(incompleteLabel.snp.trailing).inset(0)
             $0.top.equalTo(dateLabel.snp.bottom).inset(-8)
         }
         
@@ -225,7 +227,6 @@ extension ViewController:
             return UITableViewCell()
         }
         let model = dataSource.getModel(for: indexPath)
-        
         customCell.configure(with: model)
         return customCell
     }
