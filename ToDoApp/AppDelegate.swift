@@ -10,12 +10,12 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        ToDoManagerImp.shared.mySavedToDoItems()
-        //ToDoManagerImp.shared.remove()
+        //ToDoManagerImp.shared.mySavedToDoItems()
+        ToDoManagerImp.shared.remove()
         return true
     }
 

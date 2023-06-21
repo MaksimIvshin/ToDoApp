@@ -38,7 +38,7 @@ class AddToDoController: BaseViewController,
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
-
+    
     lazy var separatorForNameTF: UILabel = {
         let separator = UILabel()
         separator.backgroundColor = Resources.Colors.separator
@@ -46,7 +46,7 @@ class AddToDoController: BaseViewController,
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
-
+    
     lazy var separatorForDescriptionTV: UILabel = {
         let separator = UILabel()
         separator.backgroundColor = Resources.Colors.separator
@@ -54,7 +54,7 @@ class AddToDoController: BaseViewController,
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
-
+    
     lazy var separatorForDateTF: UILabel = {
         let separator = UILabel()
         separator.backgroundColor = Resources.Colors.buttonSave
@@ -62,7 +62,7 @@ class AddToDoController: BaseViewController,
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
-
+    
     lazy var nameTF: UITextField = {
         let tf = UITextField()
         tf.backgroundColor = Resources.Colors.nameSubscribeDate
@@ -89,7 +89,7 @@ class AddToDoController: BaseViewController,
         }
         return tv
     }()
-
+    
     lazy var placeHolderForDescriprionTV: UILabel = {
         let label = UILabel()
         label.text = placeholderText
@@ -112,14 +112,14 @@ class AddToDoController: BaseViewController,
         }
         return tf
     }()
-
+    
     lazy var imageCalendar: UIImageView = {
         var image = UIImageView()
         image.image = Resources.Images.calendar
         image.translatesAutoresizingMaskIntoConstraints = true
         return image
     }()
-
+    
     lazy var toolBar: UIToolbar = {
         let tb = UIToolbar()
         tb.barStyle = UIBarStyle.default
@@ -178,7 +178,7 @@ class AddToDoController: BaseViewController,
         configure()
         setupConstraints()
     }
-
+    
     private func addViews() {
         view.addSubview(saveButton)
         view.addSubview(scroll)
@@ -187,43 +187,43 @@ class AddToDoController: BaseViewController,
         view.addSubview(separator)
         view.addSubview(separatorForDescriptionTV)
     }
-
+    
     private func setupConstraints() {
         newTaskTitle.snp.makeConstraints {
             $0.top.equalToSuperview().inset(105)
             $0.leading.equalToSuperview().inset(16)
             $0.bottom.equalTo(scroll.snp.top).inset(25)
         }
-
+        
         separator.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(2)
             $0.bottom.equalTo(scroll.snp.top).inset(26)
         }
-
+        
         separatorForNameTF.snp.makeConstraints {
             $0.leading.trailing.equalTo(nameTF)
             $0.bottom.equalTo(nameTF)
             $0.height.equalTo(2)
         }
-
+        
         separatorForDescriptionTV.snp.makeConstraints {
             $0.leading.trailing.equalTo(descripitonTV)
             $0.bottom.equalTo(descripitonTV)
             $0.height.equalTo(2)
         }
-
+        
         placeHolderForDescriprionTV.snp.makeConstraints{
             $0.leading.equalToSuperview()
             $0.top.centerY.equalTo(descripitonTV)
         }
-
+        
         separatorForDateTF.snp.makeConstraints {
             $0.leading.trailing.equalTo(dateTF)
             $0.bottom.equalTo(dateTF)
             $0.height.equalTo(2)
         }
-
+        
         imageCalendar.snp.makeConstraints {
             $0.trailing.equalTo(dateTF).inset(15)
             $0.top.equalTo(dateTF).inset(19)
@@ -257,7 +257,7 @@ class AddToDoController: BaseViewController,
         descripitonTV.delegate = self
         view.backgroundColor = Resources.Colors.backgroundAddView
     }
-
+    
     func textViewDidChange(_ textView: UITextView) {
         guard let descripitonLabel = descripitonTV.text, !descripitonLabel.isEmpty
         else {
@@ -279,8 +279,8 @@ class AddToDoController: BaseViewController,
         let newToDo = ToDoItem(createDate: Date(),
                                actionDate: dPicker.date,
                                name: nameTF.text ?? "",
-                               subscribe: descripitonTV.text ?? "",
-                               state: ToDoItemState.Incomplete.rawValue)
+                               subscribe: descripitonTV.text ?? ""
+        )
         ToDoManagerImp.shared.save(toDoItem: newToDo)
         self.navigationController?.popViewController(animated: true)
         self.delegate?.updateHomeWorks()
