@@ -22,7 +22,6 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
                 print("Notification permission denied")
             }
         }
-
         UNUserNotificationCenter.current().delegate = self
     }
 
@@ -33,13 +32,10 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         content.body = body
         content.sound = UNNotificationSound.defaultCritical
 
-
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
                 print("Error scheduling notification: \(error.localizedDescription)")
@@ -56,17 +52,17 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        // Customize the presentation options if desired
+            // Customize the presentation options if desired
             completionHandler([.alert, .badge, .sound])
-    }
+        }
 
     // Handle user's response to a notification
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void) {
-        // Handle the user's response here
+            // Handle the user's response here
             debugPrint(#function)
-        completionHandler()
-    }
+            completionHandler()
+        }
 }

@@ -17,6 +17,7 @@ final class MainControllerDataSource {
     
     init() {
         let all = ToDoManagerImp.shared.fetchToDoList()
+        
         completed = all.filter({
             $0.isFinished
         })

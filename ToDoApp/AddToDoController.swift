@@ -279,8 +279,7 @@ class AddToDoController: BaseViewController,
         let newToDo = ToDoItem(createDate: Date(),
                                actionDate: dPicker.date,
                                name: nameTF.text ?? "",
-                               subscribe: descripitonTV.text ?? ""
-        )
+                               subscribe: descripitonTV.text ?? "", isFinished: false)
         ToDoManagerImp.shared.save(toDoItem: newToDo)
         NotificationManager.shared.scheduleNotification(title: newToDo.name, body: newToDo.subscribe, date: newToDo.actionDate)
         self.navigationController?.popViewController(animated: true)

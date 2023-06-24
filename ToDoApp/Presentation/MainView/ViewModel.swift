@@ -78,7 +78,7 @@ final class ViewModel: UIView {
         toggle.setOn(model.isFinished, animated: false)
         addSubviews()
         setupConstraints()
-    }
+       }
     
     func addSubviews() {
         addSubview(nameLabel)

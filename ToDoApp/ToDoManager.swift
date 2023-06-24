@@ -12,12 +12,11 @@ struct ToDoItem: Codable {
     var actionDate: Date
     var name: String
     var subscribe: String
-    var isFinished: Bool = false
+    var isFinished: Bool
 }
 
 protocol ToDoManager {
     var toDoList: [ToDoItem] { get }
-    
     func fetchToDoList (dateToDo: Date? ) -> [ToDoItem]
     func save(toDoItem: ToDoItem)
     func remove()
@@ -40,10 +39,12 @@ final class ToDoManagerImp: ToDoManager {
         } else {
             return toDoList
         }
+        
     }
     
     func saveData() {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(toDoList), forKey: "toDoItems")
+
     }
     
     func save(toDoItem: ToDoItem) {
@@ -72,6 +73,7 @@ final class ToDoManagerImp: ToDoManager {
                                     subscribe: oldModel.subscribe,
                                     isFinished: newStatus)
             toDoList.insert(newModel, at: index)
+            saveData()
         }
         changeHandler?()
     }
@@ -83,6 +85,6 @@ final class ToDoManagerImp: ToDoManager {
         return .init(createDate: Date(),
                      actionDate: Date(),
                      name: "",
-                     subscribe: "")
+                     subscribe: "", isFinished: false)
     }
 }

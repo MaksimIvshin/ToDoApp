@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     private lazy var dateLabel: UILabel = {
         let date = UILabel()
-        date.backgroundColor = .white
+        date.backgroundColor = Resources.Colors.backgroundAddView
         date.text = Date().create(with: .titleDate).capitalized
         date.font = UIFont(name: "Inter-SemiBold", size: 32)
         date.translatesAutoresizingMaskIntoConstraints = false
@@ -24,12 +24,18 @@ class ViewController: UIViewController {
     }()
     
     private lazy var photoLabel: UIImageView = {
-        var image = UIImageView(frame: CGRectMake(0, 0, 48, 48))
-        image.image = Resources.Images.avatar
+        let image = UIImageView(frame: CGRectMake(0, 0, 48, 48))
+        image.isUserInteractionEnabled = true
+        image.image = Resources.Images.photoApparat
+        image.layer.borderColor = UIColor.gray.cgColor// цвет рамки
+        image.layer.borderWidth = 1
+        image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = true
         image.layer.cornerRadius = image.frame.size.width / 2
         image.layer.masksToBounds = false
         image.clipsToBounds = true
+        let tapToImageAvatar = UITapGestureRecognizer(target: self, action: #selector(imageAvatarTapped))
+        image.addGestureRecognizer(tapToImageAvatar)
         return image
     }()
     
@@ -53,6 +59,7 @@ class ViewController: UIViewController {
         didSet {
             if let completedCount {
                 completedLabel.text = "Completed \(completedCount)"
+                completedLabel.backgroundColor = Resources.Colors.backgroundAddView
             } else {
                 completedLabel.text = ""
             }
@@ -63,6 +70,7 @@ class ViewController: UIViewController {
         didSet {
             if let notCompletedCount {
                 incompleteLabel.text = "Incomplete \(notCompletedCount)"
+                incompleteLabel.backgroundColor = Resources.Colors.backgroundAddView
             } else {
                 incompleteLabel.text = ""
             }
@@ -79,7 +87,6 @@ class ViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tv = UITableView()
-        tv.backgroundColor = .white
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
@@ -95,7 +102,13 @@ class ViewController: UIViewController {
         button.addTarget(self, action: #selector(add), for: .touchUpInside)
         return button
     }()
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadImage()
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         addViews()
@@ -103,11 +116,12 @@ class ViewController: UIViewController {
         customizeNavigationBar()
         initTableView()
         updateHomeWorks()
+        customizeViewController()
         ToDoManagerImp.shared.changeHandler = { [weak self] in
             self?.updateHomeWorks()
         }
     }
-    
+
     private func addViews() {
         view.addSubview(dateLabel)
         view.addSubview(tableView)
@@ -160,17 +174,25 @@ class ViewController: UIViewController {
             $0.bottom.equalToSuperview()
         }
     }
-    
+
+    @objc private func imageAvatarTapped() {
+        addImagePress()
+    }
+
     @objc private func add() {
         let addController = AddToDoController()
         addController.delegate = self
         navigationController?.pushViewController(addController, animated: false)
     }
     
-    private func customizeNavigationBar () {
+    private func customizeNavigationBar() {
         navigationController?.navigationBar.backIndicatorImage = Resources.Images.buttonBack
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = Resources.Images.buttonBack
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "To go back", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+    }
+
+    private func customizeViewController() {
+        view.backgroundColor = Resources.Colors.backgroundAddView
     }
     
     private func changeWorksCount(completed: Int, notCompleted: Int) {
@@ -183,8 +205,8 @@ extension ViewController: AddViewControllerDelegate {
     func updateHomeWorks() {
         dataSource.updateToDoItems()
         changeWorksCount(completed: dataSource.completeCount, notCompleted: dataSource.notCompleteCount)
-        ToDoManagerImp.shared.saveData()
         tableView.reloadData()
+        ToDoManagerImp.shared.saveData()
     }
 }
 
@@ -195,6 +217,8 @@ extension ViewController:
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerWithoutXib(cellClasses: TableViewCell.self)
+        tableView.reloadData()
+        ToDoManagerImp.shared.saveData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -229,5 +253,60 @@ extension ViewController:
         let model = dataSource.getModel(for: indexPath)
         customCell.configure(with: model)
         return customCell
+    }
+}
+
+extension ViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+
+    private func addImagePress() {
+        let ac = UIAlertController(title: "Select image", message: "Select image from?", preferredStyle: .actionSheet)
+        let cameraButton = UIAlertAction(title: "Camera", style: .default) { [weak self] (_) in
+            self?.showImagPicker(source: .camera)
+        }
+        let libraryButton = UIAlertAction(title: "Library", style: .default) { [weak self] (_) in
+            self?.showImagPicker(source: .photoLibrary)
+        }
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel)
+        ac.addAction(cameraButton)
+        ac.addAction(libraryButton)
+        ac.addAction(cancelButton)
+        self.present(ac, animated: true)
+    }
+
+    private func showImagPicker(source: UIImagePickerController.SourceType) {
+        guard UIImagePickerController.isSourceTypeAvailable(source) else {
+            return
+        }
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = source
+        imagePickerController.allowsEditing = false
+        self.present(imagePickerController, animated: true)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            photoLabel.image = selectedImage
+        } else {
+            photoLabel.image = Resources.Images.photoApparat
+        }
+        saveImage()
+        picker.dismiss(animated: true)
+    }
+
+    private func saveImage() {
+        guard let data = photoLabel.image?.jpegData(compressionQuality: 0.5) else { return }
+        let encoded = try! PropertyListEncoder().encode(data)
+        UserDefaults.standard.set(encoded, forKey: "imageAvatar")
+    }
+
+    private func loadImage() {
+        guard let data = UserDefaults.standard.data(forKey: "imageAvatar") else { return }
+        let decoded = try! PropertyListDecoder().decode(Data.self, from: data)
+        photoLabel.image = UIImage(data: decoded)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }
