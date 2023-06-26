@@ -54,7 +54,11 @@ final class ToDoManagerImp: ToDoManager {
     
     func mySavedToDoItems() {
         if let myToDoItems = UserDefaults.standard.value(forKey: "toDoItems") as? Data {
-            toDoList = try! PropertyListDecoder().decode(Array<ToDoItem>.self, from: myToDoItems)
+            do {
+                toDoList = try PropertyListDecoder().decode(Array<ToDoItem>.self, from: myToDoItems)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -81,7 +85,6 @@ final class ToDoManagerImp: ToDoManager {
     func getNewToDo() -> ToDoItem {
         var timeInterval = Date().timeIntervalSince1970
         timeInterval += (60 * 60 * 24 * 10)
-        let expirationDate = Date(timeIntervalSince1970: timeInterval)
         return .init(createDate: Date(),
                      actionDate: Date(),
                      name: "",

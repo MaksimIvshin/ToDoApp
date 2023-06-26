@@ -11,14 +11,11 @@ extension UIColor {
 
   convenience init(hexString: String, alpha: CGFloat = 1.0) {
     var cString = hexString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
     if cString.hasPrefix("#") { cString.removeFirst() }
-
     if cString.count != 6 {
         self.init(hexString: "ff0000") // return red color for wrong hex input
       return
     }
-
     var rgbValue: UInt64 = 0
     Scanner(string: cString).scanHexInt64(&rgbValue)
 

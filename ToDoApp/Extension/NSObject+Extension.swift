@@ -12,4 +12,3 @@ extension NSObject {
         String(describing: self)
     }
 }
-
