@@ -275,13 +275,13 @@ class AddToDoController: BaseViewController,
         dateTF.text = sender.date.create(with: .simple)
     }
     
-    func saveList() {
+    private func saveList() {
         let newToDo = ToDoItem(createDate: Date(),
                                actionDate: dPicker.date,
                                name: nameTF.text ?? "",
-                               subscribe: descripitonTV.text ?? ""
-        )
+                               subscribe: descripitonTV.text ?? "", isFinished: false)
         ToDoManagerImp.shared.save(toDoItem: newToDo)
+        NotificationManager.shared.scheduleNotification(title: newToDo.name, body: newToDo.subscribe, date: newToDo.actionDate)
         self.navigationController?.popViewController(animated: true)
         self.delegate?.updateHomeWorks()
     }
@@ -292,7 +292,7 @@ class AddToDoController: BaseViewController,
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true)
         }
-        else if self.dPicker.date.create(with:.titleDate) == Date().create(with: .titleDate) {
+        else if self.dPicker.date.create(with:.simple) == Date().create(with: .simple) {
             let alert = UIAlertController(title: "Warning!", message: "Fill deadline (for ex. tomorrow)!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true)

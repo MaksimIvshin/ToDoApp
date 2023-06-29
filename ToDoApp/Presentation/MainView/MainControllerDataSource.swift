@@ -11,13 +11,13 @@ final class MainControllerDataSource {
     
     var completeCount: Int { completed.count }
     var notCompleteCount: Int { nonCompleted.count }
-    
     var completed: [ToDoItem]
     var nonCompleted: [ToDoItem]
     var numberOfSections = 2
     
     init() {
         let all = ToDoManagerImp.shared.fetchToDoList()
+        
         completed = all.filter({
             $0.isFinished
         })
