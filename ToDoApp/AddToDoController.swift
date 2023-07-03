@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol AddViewControllerDelegate: AnyObject  {
-    func updateHomeWorks()
+    func updateTodoItems()
 }
 
 class AddToDoController: BaseViewController,
@@ -283,7 +283,7 @@ class AddToDoController: BaseViewController,
         ToDoManagerImp.shared.save(toDoItem: newToDo)
         NotificationManager.shared.scheduleNotification(title: newToDo.name, body: newToDo.subscribe, date: newToDo.actionDate)
         self.navigationController?.popViewController(animated: true)
-        self.delegate?.updateHomeWorks()
+        self.delegate?.updateTodoItems()
     }
     
     @objc func saveHomeWork() {

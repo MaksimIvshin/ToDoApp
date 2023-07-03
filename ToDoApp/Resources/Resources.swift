@@ -22,5 +22,6 @@ enum Resources {
         static var calendar = UIImage(named: "Calendar")
         static var avatar = UIImage(named: "avatar")
         static var photoApparat = UIImage(named: "photoApparatImage")
+        static var iconDown = UIImage(named: "labelDown")
     }
 }

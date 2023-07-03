@@ -17,7 +17,6 @@ final class MainControllerDataSource {
     
     init() {
         let all = ToDoManagerImp.shared.fetchToDoList()
-        
         completed = all.filter({
             $0.isFinished
         })
@@ -25,9 +24,13 @@ final class MainControllerDataSource {
             !$0.isFinished
         })
     }
-    
-    func updateToDoItems() {
-        let all = ToDoManagerImp.shared.fetchToDoList()
+
+    func updateToDoItems(_ date: Date) {
+        let startOfTheDay = Calendar.current.startOfDay(for: date)
+        let endOfTheDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfTheDay)
+        let all = ToDoManagerImp.shared.fetchToDoList().filter({
+            $0.actionDate >= startOfTheDay && $0.actionDate < endOfTheDay!
+        })
         completed = all.filter({
             $0.isFinished
         })

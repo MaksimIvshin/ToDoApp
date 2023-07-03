@@ -10,9 +10,10 @@ import SnapKit
 import UserNotifications
 import NotificationCenter
 
-class ViewController: UIViewController {
-    
+class ViewController: BaseViewController {
+
     let dataSource = MainControllerDataSource()
+    var selectedDate: Date = Date()
     
     private lazy var dateLabel: UILabel = {
         let date = UILabel()
@@ -27,7 +28,7 @@ class ViewController: UIViewController {
         let image = UIImageView(frame: CGRectMake(0, 0, 48, 48))
         image.isUserInteractionEnabled = true
         image.image = Resources.Images.photoApparat
-        image.layer.borderColor = UIColor.gray.cgColor// цвет рамки
+        image.layer.borderColor = UIColor.gray.cgColor
         image.layer.borderWidth = 1
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = true
@@ -103,11 +104,52 @@ class ViewController: UIViewController {
         return button
     }()
 
+    lazy var dPickerForlabelDown: UIDatePicker = {
+        let dp = UIDatePicker()
+        dp.datePickerMode = .dateAndTime
+        dp.preferredDatePickerStyle = .wheels
+        dp.minimumDate = Date()
+        dp.locale = Locale(identifier: "US")
+        dp.translatesAutoresizingMaskIntoConstraints = false
+        dp.addTarget(self, action: #selector(pickerChanged), for: .valueChanged)
+        return dp
+    }()
+
+    lazy var textFieldForDatePicker: UITextField = {
+        let tf = UITextField()
+        tf.tintColor = UIColor.clear
+        tf.inputView = dPickerForlabelDown
+        tf.addSubview(imageDown)
+        tf.inputAccessoryView = toolBar
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        return tf
+    }()
+
+    lazy var imageDown: UIImageView = {
+        var image = UIImageView()
+        image.image = Resources.Images.iconDown
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+
+    lazy var toolBar: UIToolbar = {
+        let tb = UIToolbar()
+        tb.barStyle = UIBarStyle.default
+        tb.isTranslucent = true
+        tb.tintColor = .black
+        tb.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(dpClose))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        tb.setItems([spaceButton, doneButton], animated: false)
+        tb.isUserInteractionEnabled = true
+        tb.translatesAutoresizingMaskIntoConstraints = false
+        return tb
+    }()
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadImage()
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,10 +157,10 @@ class ViewController: UIViewController {
         setupConstraints()
         customizeNavigationBar()
         initTableView()
-        updateHomeWorks()
+        updateTodoItems()
         customizeViewController()
         ToDoManagerImp.shared.changeHandler = { [weak self] in
-            self?.updateHomeWorks()
+            self?.updateTodoItems()
         }
     }
 
@@ -130,6 +172,13 @@ class ViewController: UIViewController {
         view.addSubview(completedLabel)
         view.addSubview(separatorForMainView)
         view.addSubview(addButton)
+        view.addSubview(textFieldForDatePicker)
+    }
+
+    @objc private func pickerChanged(_ sender: UIDatePicker) {
+        dateLabel.text = sender.date.create(with: .titleDate).capitalized
+        selectedDate = sender.date
+        updateTodoItems()
     }
     
     private func setupConstraints() {
@@ -141,7 +190,6 @@ class ViewController: UIViewController {
         photoLabel.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(16)
             $0.top.equalToSuperview().inset(71)
-            $0.leading.equalTo(dateLabel.snp.trailing).inset(68)
             $0.height.width.equalTo(48)
         }
         
@@ -173,10 +221,25 @@ class ViewController: UIViewController {
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview()
         }
+
+        textFieldForDatePicker.snp.makeConstraints{
+            $0.trailing.equalTo(dateLabel.snp.trailing).inset(-30)
+            $0.bottom.equalTo(completedLabel.snp.top).inset(-12)
+            $0.width.height.equalTo(30)
+        }
+
+        imageDown.snp.makeConstraints {
+            $0.trailing.leading.equalTo(textFieldForDatePicker).inset(1)
+            $0.top.bottom.equalTo(textFieldForDatePicker).inset(1)
+        }
     }
 
     @objc private func imageAvatarTapped() {
         addImagePress()
+    }
+
+    @objc private func dpClose (_ sender: UIBarButtonItem) {
+        view.endEditing(true)
     }
 
     @objc private func add() {
@@ -202,9 +265,9 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: AddViewControllerDelegate {
-    func updateHomeWorks() {
-        dataSource.updateToDoItems()
-        changeWorksCount(completed: dataSource.completeCount, notCompleted: dataSource.notCompleteCount)
+    func updateTodoItems() {
+        dataSource.updateToDoItems(selectedDate)
+        changeWorksCount(completed: dataSource.completeCount,                       notCompleted: dataSource.notCompleteCount)
         tableView.reloadData()
         ToDoManagerImp.shared.saveData()
     }
@@ -281,29 +344,45 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
         imagePickerController.delegate = self
         imagePickerController.sourceType = source
         imagePickerController.allowsEditing = false
-        self.present(imagePickerController, animated: true)
+        // ускорит ли?
+        DispatchQueue.main.async { [weak self] in
+            self?.present(imagePickerController, animated: true)
+        }
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
-            photoLabel.image = selectedImage
-        } else {
-            photoLabel.image = Resources.Images.photoApparat
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            if let selectedImage = info[.originalImage] as? UIImage {
+                let size = CGSize(width: 100, height: 100)
+                let newImage = selectedImage.resizedImage(withContentMode: .scaleAspectFill, bounds: size, interpolationQuality: .low)
+                DispatchQueue.main.async { [weak self] in
+                    self?.photoLabel.image = newImage
+                    self?.saveImage()
+                }
+            } else {
+                self?.photoLabel.image = Resources.Images.photoApparat
+            }
         }
-        saveImage()
         picker.dismiss(animated: true)
     }
 
     private func saveImage() {
         guard let data = photoLabel.image?.jpegData(compressionQuality: 0.5) else { return }
-        let encoded = try! PropertyListEncoder().encode(data)
+        print(data)
+        let encoded = try? PropertyListEncoder().encode(data)
         UserDefaults.standard.set(encoded, forKey: "imageAvatar")
     }
 
+    // нормальная ли обработка try?
     private func loadImage() {
-        guard let data = UserDefaults.standard.data(forKey: "imageAvatar") else { return }
-        let decoded = try! PropertyListDecoder().decode(Data.self, from: data)
-        photoLabel.image = UIImage(data: decoded)
+        if let data = UserDefaults.standard.data(forKey: "imageAvatar") {
+            do {
+                let decoded = try PropertyListDecoder().decode(Data.self, from: data)
+                photoLabel.image = UIImage(data: decoded)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

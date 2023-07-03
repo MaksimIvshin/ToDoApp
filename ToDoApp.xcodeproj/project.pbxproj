@@ -14,6 +14,9 @@
 		9206E24D2A169B6A003962D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9206E24B2A169B6A003962D3 /* Main.storyboard */; };
 		9206E24F2A169B6B003962D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9206E24E2A169B6B003962D3 /* Assets.xcassets */; };
 		9206E2522A169B6B003962D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9206E2502A169B6B003962D3 /* LaunchScreen.storyboard */; };
+		921D98262A4EFE1500079B97 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921D98252A4EFE1500079B97 /* UIImage+Extension.swift */; };
+		921D98282A4EFE6E00079B97 /* UIImage+Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921D98272A4EFE6E00079B97 /* UIImage+Alpha.swift */; };
+		921D982A2A4EFEC200079B97 /* UIImage+Corner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921D98292A4EFEC200079B97 /* UIImage+Corner.swift */; };
 		922AC9852A1F84F9005F5A00 /* AvoidingKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922AC9842A1F84F9005F5A00 /* AvoidingKeyboard.swift */; };
 		922AC9872A1F8529005F5A00 /* HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922AC9862A1F8529005F5A00 /* HideKeyboard.swift */; };
 		922AC9892A1F8572005F5A00 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922AC9882A1F8572005F5A00 /* BaseViewController.swift */; };
@@ -53,6 +56,9 @@
 		9206E24E2A169B6B003962D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9206E2512A169B6B003962D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9206E2532A169B6B003962D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		921D98252A4EFE1500079B97 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		921D98272A4EFE6E00079B97 /* UIImage+Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Alpha.swift"; sourceTree = "<group>"; };
+		921D98292A4EFEC200079B97 /* UIImage+Corner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Corner.swift"; sourceTree = "<group>"; };
 		922AC9842A1F84F9005F5A00 /* AvoidingKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvoidingKeyboard.swift; sourceTree = "<group>"; };
 		922AC9862A1F8529005F5A00 /* HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboard.swift; sourceTree = "<group>"; };
 		922AC9882A1F8572005F5A00 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +188,9 @@
 			children = (
 				925B89DE2A1CBB3A0092EE2F /* DateToString.swift */,
 				927E761E2A3F8A96008B82A5 /* Notification+Extension.swift */,
+				921D98252A4EFE1500079B97 /* UIImage+Extension.swift */,
+				921D98292A4EFEC200079B97 /* UIImage+Corner.swift */,
+				921D98272A4EFE6E00079B97 /* UIImage+Alpha.swift */,
 				92E1E52D2A2A30F700D832A1 /* UIColor+Extension.swift */,
 				92E1E5262A29F15700D832A1 /* UITableView+Extension.swift */,
 				92E1E5282A29F17500D832A1 /* NSObject+Extension.swift */,
@@ -366,6 +375,7 @@
 				92BF81882A27325700B1B5F1 /* AddToDoController.swift in Sources */,
 				92E1E5292A29F17500D832A1 /* NSObject+Extension.swift in Sources */,
 				922AC9892A1F8572005F5A00 /* BaseViewController.swift in Sources */,
+				921D98282A4EFE6E00079B97 /* UIImage+Alpha.swift in Sources */,
 				925B89D62A16A6800092EE2F /* LaunchScreenClass.swift in Sources */,
 				922AC9852A1F84F9005F5A00 /* AvoidingKeyboard.swift in Sources */,
 				9206E2482A169B6A003962D3 /* SceneDelegate.swift in Sources */,
@@ -373,6 +383,8 @@
 				925B89DF2A1CBB3A0092EE2F /* DateToString.swift in Sources */,
 				92726ED92A169DBC00A92B67 /* ToDoManager.swift in Sources */,
 				92E1E5312A2A31BF00D832A1 /* Resources.swift in Sources */,
+				921D98262A4EFE1500079B97 /* UIImage+Extension.swift in Sources */,
+				921D982A2A4EFEC200079B97 /* UIImage+Corner.swift in Sources */,
 				927E761D2A3F0C49008B82A5 /* NotificationManager.swift in Sources */,
 				922AC98C2A1F89DA005F5A00 /* NibLoadable.swift in Sources */,
 				925B89DD2A1CBA030092EE2F /* ViewModel.swift in Sources */,
