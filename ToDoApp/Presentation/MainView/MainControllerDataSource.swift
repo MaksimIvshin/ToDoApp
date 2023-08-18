@@ -27,9 +27,9 @@ final class MainControllerDataSource {
 
     func updateToDoItems(_ date: Date) {
         let startOfTheDay = Calendar.current.startOfDay(for: date)
-        let endOfTheDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfTheDay)
+        let endOfTheDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfTheDay) ?? Date()
         let all = ToDoManagerImp.shared.fetchToDoList().filter({
-            $0.actionDate >= startOfTheDay && $0.actionDate < endOfTheDay!
+            $0.actionDate >= startOfTheDay && $0.actionDate < endOfTheDay
         })
         completed = all.filter({
             $0.isFinished
@@ -65,6 +65,24 @@ final class MainControllerDataSource {
             return completed[indexPath.row]
         default:
             return ToDoManagerImp.shared.getNewToDo()
+        }
+    }
+    
+// прорпботать над 2умя секциями?
+    func removeItem(indexPath: IndexPath)  {
+                var toDoItem: ToDoItem?
+                if indexPath.section == 0 {
+                    if nonCompleted.indices.contains(indexPath.row) {
+                        toDoItem = nonCompleted[indexPath.row]
+                    }
+                } else {
+                    if completed.indices.contains(indexPath.row) {
+                        toDoItem = completed[indexPath.row]
+                    }
+                }
+                guard toDoItem != nil else { return }
+        if !ToDoManagerImp.shared.toDoList.isEmpty {
+            ToDoManagerImp.shared.toDoList.remove(at: indexPath.row)
         }
     }
 }

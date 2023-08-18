@@ -3,43 +3,12 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Launch Screen Class-->
-        <scene sceneID="FXh-pZ-4mU">
-            <objects>
-                <viewController storyboardIdentifier="LaunchScreenClass" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gud-3p-Fju" customClass="LaunchScreenClass" customModule="ToDoApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="OAj-KJ-PHY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toDoLogoAssets" translatesAutoresizingMaskIntoConstraints="NO" id="6vm-TK-0PQ">
-                                <rect key="frame" x="67.5" y="213.5" width="240" height="240"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="MM3-zN-woq"/>
-                                    <constraint firstAttribute="height" constant="240" id="nSK-dm-UYC"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Uxw-Vw-D2J"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="6vm-TK-0PQ" firstAttribute="centerY" secondItem="OAj-KJ-PHY" secondAttribute="centerY" id="GGg-Rn-YyV"/>
-                            <constraint firstItem="6vm-TK-0PQ" firstAttribute="centerX" secondItem="OAj-KJ-PHY" secondAttribute="centerX" id="QIa-h4-L1E"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="logoToDo" destination="6vm-TK-0PQ" id="Cbh-dk-sup"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xQS-PU-Jx1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="260" y="-35.532233883058474"/>
-        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -76,7 +45,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="toDoLogoAssets" width="626" height="626"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -8,9 +8,6 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
-    
-    private var toDoView: UIView?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none

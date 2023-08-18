@@ -18,8 +18,6 @@ struct ToDoItem: Codable {
 protocol ToDoManager {
     var toDoList: [ToDoItem] { get }
     func fetchToDoList (dateToDo: Date? ) -> [ToDoItem]
-    func save(toDoItem: ToDoItem)
-    func remove()
 }
 
 final class ToDoManagerImp: ToDoManager {
@@ -39,19 +37,13 @@ final class ToDoManagerImp: ToDoManager {
         } else {
             return toDoList
         }
-        
     }
-    
-    func saveData() {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(toDoList), forKey: "toDoItems")
 
-    }
-    
     func save(toDoItem: ToDoItem) {
         toDoList.append(toDoItem)
-        saveData()
+        UserDefaults.standard.saveData()
     }
-    
+
     func mySavedToDoItems() {
         if let myToDoItems = UserDefaults.standard.value(forKey: "toDoItems") as? Data {
             do {
@@ -61,15 +53,14 @@ final class ToDoManagerImp: ToDoManager {
             }
         }
     }
-    
-    func remove() {
-        // toDoList.removeAll(where: {$0.createDate == date })
+
+    func remove(toDoItem: ToDoItem) {
         UserDefaults.standard.removeObject(forKey: "toDoItems")
     }
     
     func toggle(modelWith date: Date) {
         if let index = toDoList.firstIndex(where: { $0.createDate == date }) {
-            var oldModel = toDoList.remove(at: index)
+            let oldModel = toDoList.remove(at: index)
             let newStatus = oldModel.isFinished ? false : true
             let newModel = ToDoItem(createDate: oldModel.createDate,
                                     actionDate: oldModel.actionDate,
@@ -77,7 +68,7 @@ final class ToDoManagerImp: ToDoManager {
                                     subscribe: oldModel.subscribe,
                                     isFinished: newStatus)
             toDoList.insert(newModel, at: index)
-            saveData()
+            UserDefaults.standard.saveData()
         }
         changeHandler?()
     }
@@ -88,6 +79,7 @@ final class ToDoManagerImp: ToDoManager {
         return .init(createDate: Date(),
                      actionDate: Date(),
                      name: "",
-                     subscribe: "", isFinished: false)
+                     subscribe: "",
+                     isFinished: false)
     }
 }

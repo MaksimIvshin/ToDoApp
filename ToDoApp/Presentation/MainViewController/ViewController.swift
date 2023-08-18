@@ -7,8 +7,6 @@
 
 import UIKit
 import SnapKit
-import UserNotifications
-import NotificationCenter
 
 class ViewController: BaseViewController {
 
@@ -24,7 +22,7 @@ class ViewController: BaseViewController {
         return date
     }()
     
-    private lazy var photoLabel: UIImageView = {
+    lazy var photoLabel: UIImageView = {
         let image = UIImageView(frame: CGRectMake(0, 0, 48, 48))
         image.isUserInteractionEnabled = true
         image.image = Resources.Images.photoApparat
@@ -98,7 +96,6 @@ class ViewController: BaseViewController {
         button.setTitle("+", for: .normal)
         button.titleLabel?.font = UIFont(name: "Arial", size: 30)
         button.backgroundColor = Resources.Colors.buttonSave
-        button.translatesAutoresizingMaskIntoConstraints = true
         button.layer.cornerRadius = button.frame.size.width / 2
         button.addTarget(self, action: #selector(add), for: .touchUpInside)
         return button
@@ -153,6 +150,7 @@ class ViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
         addViews()
         setupConstraints()
         customizeNavigationBar()
@@ -173,12 +171,6 @@ class ViewController: BaseViewController {
         view.addSubview(separatorForMainView)
         view.addSubview(addButton)
         view.addSubview(textFieldForDatePicker)
-    }
-
-    @objc private func pickerChanged(_ sender: UIDatePicker) {
-        dateLabel.text = sender.date.create(with: .titleDate).capitalized
-        selectedDate = sender.date
-        updateTodoItems()
     }
     
     private func setupConstraints() {
@@ -242,6 +234,12 @@ class ViewController: BaseViewController {
         view.endEditing(true)
     }
 
+    @objc private func pickerChanged(_ sender: UIDatePicker) {
+        dateLabel.text = sender.date.create(with: .titleDate).capitalized
+        selectedDate = sender.date
+        updateTodoItems()
+    }
+
     @objc private func add() {
         let addController = AddToDoController()
         addController.delegate = self
@@ -267,9 +265,10 @@ class ViewController: BaseViewController {
 extension ViewController: AddViewControllerDelegate {
     func updateTodoItems() {
         dataSource.updateToDoItems(selectedDate)
-        changeWorksCount(completed: dataSource.completeCount,                       notCompleted: dataSource.notCompleteCount)
+        changeWorksCount(completed: dataSource.completeCount,
+                         notCompleted: dataSource.notCompleteCount)
         tableView.reloadData()
-        ToDoManagerImp.shared.saveData()
+        UserDefaults.standard.saveData()
     }
 }
 
@@ -281,33 +280,25 @@ extension ViewController:
         tableView.dataSource = self
         tableView.registerWithoutXib(cellClasses: TableViewCell.self)
         tableView.reloadData()
-        ToDoManagerImp.shared.saveData()
+        UserDefaults.standard.saveData()
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        dataSource.numberOfSections
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //поменять отступ слева в таблице
+        let tableViewText = UILabel()
+        tableViewText.text = dataSource.getTitle(for: section)
+        return tableViewText
     }
-    
-    func tableView(
-        _ tableView: UITableView,
-        viewForHeaderInSection section: Int
-    ) -> UIView? {
-        let label = UILabel()
-        label.text = dataSource.getTitle(for: section)
-        return label
-    }
-    
-    func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
-    ) -> Int {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         dataSource.numberOfRowsInSection(section: section)
     }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+          dataSource.numberOfSections
+    }
     
-    func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
             let customCell: TableViewCell = tableView.dequeueReusableCell(for: indexPath)
         else {
@@ -317,17 +308,27 @@ extension ViewController:
         customCell.configure(with: model)
         return customCell
     }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            dataSource.removeItem(indexPath: indexPath)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            dataSource.updateToDoItems(Date())
+            UserDefaults.standard.saveData()
+            tableView.endUpdates()
+        }
+    }
 }
 
 extension ViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-
     private func addImagePress() {
         let ac = UIAlertController(title: "Select image", message: "Select image from?", preferredStyle: .actionSheet)
         let cameraButton = UIAlertAction(title: "Camera", style: .default) { [weak self] (_) in
-            self?.showImagPicker(source: .camera)
+            self?.showImagePicker(source: .camera)
         }
         let libraryButton = UIAlertAction(title: "Library", style: .default) { [weak self] (_) in
-            self?.showImagPicker(source: .photoLibrary)
+            self?.showImagePicker(source: .photoLibrary)
         }
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel)
         ac.addAction(cameraButton)
@@ -336,15 +337,14 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
         self.present(ac, animated: true)
     }
 
-    private func showImagPicker(source: UIImagePickerController.SourceType) {
+    private func showImagePicker(source: UIImagePickerController.SourceType) {
         guard UIImagePickerController.isSourceTypeAvailable(source) else {
             return
         }
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = source
-        imagePickerController.allowsEditing = false
-        // ускорит ли?
+        imagePickerController.allowsEditing = true
         DispatchQueue.main.async { [weak self] in
             self?.present(imagePickerController, animated: true)
         }
@@ -352,15 +352,14 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            if let selectedImage = info[.originalImage] as? UIImage {
+            if let selectedImage = info[.editedImage] as? UIImage {
                 let size = CGSize(width: 100, height: 100)
                 let newImage = selectedImage.resizedImage(withContentMode: .scaleAspectFill, bounds: size, interpolationQuality: .low)
                 DispatchQueue.main.async { [weak self] in
+                    //показать алерт
                     self?.photoLabel.image = newImage
                     self?.saveImage()
                 }
-            } else {
-                self?.photoLabel.image = Resources.Images.photoApparat
             }
         }
         picker.dismiss(animated: true)
@@ -368,12 +367,10 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
 
     private func saveImage() {
         guard let data = photoLabel.image?.jpegData(compressionQuality: 0.5) else { return }
-        print(data)
         let encoded = try? PropertyListEncoder().encode(data)
         UserDefaults.standard.set(encoded, forKey: "imageAvatar")
     }
 
-    // нормальная ли обработка try?
     private func loadImage() {
         if let data = UserDefaults.standard.data(forKey: "imageAvatar") {
             do {

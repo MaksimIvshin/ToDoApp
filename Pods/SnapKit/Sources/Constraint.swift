@@ -168,7 +168,7 @@ public final class Constraint {
                     }
                 }
             #else
-                if self.from.attributes == self.mySavedToDoItems.attributes {
+                if self.from.attributes == self.to.attributes {
                     layoutToAttribute = layoutFromAttribute
                 } else if layoutToAttributes.count > 0 {
                     layoutToAttribute = layoutToAttributes[0]
