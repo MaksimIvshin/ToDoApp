@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct ToDoItem: Codable {
+struct ToDoItem: Codable, Equatable {
     let createDate: Date
     var actionDate: Date
     var name: String

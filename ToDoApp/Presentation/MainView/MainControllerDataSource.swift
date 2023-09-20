@@ -67,22 +67,29 @@ final class MainControllerDataSource {
             return ToDoManagerImp.shared.getNewToDo()
         }
     }
-    
-// прорпботать над 2умя секциями?
-    func removeItem(indexPath: IndexPath)  {
-                var toDoItem: ToDoItem?
-                if indexPath.section == 0 {
-                    if nonCompleted.indices.contains(indexPath.row) {
-                        toDoItem = nonCompleted[indexPath.row]
-                    }
-                } else {
-                    if completed.indices.contains(indexPath.row) {
-                        toDoItem = completed[indexPath.row]
-                    }
-                }
-                guard toDoItem != nil else { return }
-        if !ToDoManagerImp.shared.toDoList.isEmpty {
-            ToDoManagerImp.shared.toDoList.remove(at: indexPath.row)
+
+    func updateCounters() {
+        nonCompleted = ToDoManagerImp.shared.fetchToDoList().filter({ !$0.isFinished })
+        completed = ToDoManagerImp.shared.fetchToDoList().filter({ $0.isFinished })
+    }
+
+    func removeItem(indexPath: IndexPath) {
+        var toDoItem: ToDoItem?
+        if indexPath.section == 0 {
+            if nonCompleted.indices.contains(indexPath.row) {
+                toDoItem = nonCompleted[indexPath.row]
+                nonCompleted.remove(at: indexPath.row)
+            }
+        } else {
+            if completed.indices.contains(indexPath.row) {
+                toDoItem = completed[indexPath.row]
+                completed.remove(at: indexPath.row)
+            }
         }
+        guard let item = toDoItem else { return }
+        if let index = ToDoManagerImp.shared.toDoList.firstIndex(of: item) {
+            ToDoManagerImp.shared.toDoList.remove(at: index)
+        }
+        updateCounters()
     }
 }

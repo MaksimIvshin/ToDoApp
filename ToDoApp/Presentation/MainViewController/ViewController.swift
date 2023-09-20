@@ -12,7 +12,7 @@ class ViewController: BaseViewController {
 
     let dataSource = MainControllerDataSource()
     var selectedDate: Date = Date()
-    
+
     private lazy var dateLabel: UILabel = {
         let date = UILabel()
         date.backgroundColor = Resources.Colors.backgroundAddView
@@ -21,9 +21,9 @@ class ViewController: BaseViewController {
         date.translatesAutoresizingMaskIntoConstraints = false
         return date
     }()
-    
-    lazy var photoLabel: UIImageView = {
-        let image = UIImageView(frame: CGRectMake(0, 0, 48, 48))
+
+    private lazy var photoLabel: UIImageView = {
+        let image = UIImageView(frame: CGRectMake(0, 0, 100, 100))
         image.isUserInteractionEnabled = true
         image.image = Resources.Images.photoApparat
         image.layer.borderColor = UIColor.gray.cgColor
@@ -37,7 +37,7 @@ class ViewController: BaseViewController {
         image.addGestureRecognizer(tapToImageAvatar)
         return image
     }()
-    
+
     private lazy var incompleteLabel: UILabel = {
         let date = UILabel()
         date.backgroundColor = .white
@@ -45,7 +45,7 @@ class ViewController: BaseViewController {
         date.translatesAutoresizingMaskIntoConstraints = false
         return date
     }()
-    
+
     private lazy var completedLabel: UILabel = {
         let date = UILabel()
         date.backgroundColor = .white
@@ -53,7 +53,7 @@ class ViewController: BaseViewController {
         date.translatesAutoresizingMaskIntoConstraints = false
         return date
     }()
-    
+
     private var completedCount: Int? {
         didSet {
             if let completedCount {
@@ -64,7 +64,7 @@ class ViewController: BaseViewController {
             }
         }
     }
-    
+
     private var notCompletedCount: Int? {
         didSet {
             if let notCompletedCount {
@@ -75,7 +75,7 @@ class ViewController: BaseViewController {
             }
         }
     }
-    
+
     lazy var separatorForMainView: UILabel = {
         let separator = UILabel()
         separator.backgroundColor = Resources.Colors.separatofForNewTask
@@ -83,13 +83,13 @@ class ViewController: BaseViewController {
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
-    
+
     private lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
-    
+
     private lazy var addButton: UIButton = {
         let button = UIButton(frame: CGRectMake(0, 0, 56, 56))
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -172,42 +172,41 @@ class ViewController: BaseViewController {
         view.addSubview(addButton)
         view.addSubview(textFieldForDatePicker)
     }
-    
+
     private func setupConstraints() {
         dateLabel.snp.makeConstraints{
             $0.leading.equalToSuperview().inset(16)
             $0.top.equalToSuperview().inset(76)
         }
-        
+
         photoLabel.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(16)
-            $0.top.equalToSuperview().inset(71)
-            $0.height.width.equalTo(48)
+          $0.top.equalToSuperview().inset(50)
         }
-        
+
         incompleteLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)
             $0.top.equalTo(dateLabel.snp.bottom).inset(-8)
             $0.trailing.equalToSuperview().inset(179)
         }
-        
+
         completedLabel.snp.makeConstraints {
             $0.trailing.equalTo(incompleteLabel.snp.trailing).inset(0)
             $0.top.equalTo(dateLabel.snp.bottom).inset(-8)
         }
-        
+
         separatorForMainView.snp.makeConstraints {
             $0.top.equalTo(incompleteLabel.snp.bottom).inset(-16)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(2)
         }
-        
+
         addButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(40)
             $0.height.width.equalTo(56)
         }
-        
+
         tableView.snp.makeConstraints{
             $0.top.equalTo(separatorForMainView.snp.bottom).inset(-16)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -245,7 +244,7 @@ class ViewController: BaseViewController {
         addController.delegate = self
         navigationController?.pushViewController(addController, animated: false)
     }
-    
+
     private func customizeNavigationBar() {
         navigationController?.navigationBar.backIndicatorImage = Resources.Images.buttonBack
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = Resources.Images.buttonBack
@@ -255,7 +254,7 @@ class ViewController: BaseViewController {
     private func customizeViewController() {
         view.backgroundColor = Resources.Colors.backgroundAddView
     }
-    
+
     private func changeWorksCount(completed: Int, notCompleted: Int) {
         completedCount = completed
         notCompletedCount = notCompleted
@@ -282,12 +281,15 @@ extension ViewController:
         tableView.reloadData()
         UserDefaults.standard.saveData()
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        //поменять отступ слева в таблице
-        let tableViewText = UILabel()
-        tableViewText.text = dataSource.getTitle(for: section)
-        return tableViewText
+        let headerView = UIView()
+        let label = UILabel(frame: CGRect(x: 10, y: 0, width: tableView.bounds.width - 20, height: 30))
+        label.textColor = UIColor.black
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.text = dataSource.getTitle(for: section)
+        headerView.addSubview(label)
+        return headerView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -295,9 +297,9 @@ extension ViewController:
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-          dataSource.numberOfSections
+        dataSource.numberOfSections
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
             let customCell: TableViewCell = tableView.dequeueReusableCell(for: indexPath)
@@ -354,9 +356,8 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             if let selectedImage = info[.editedImage] as? UIImage {
                 let size = CGSize(width: 100, height: 100)
-                let newImage = selectedImage.resizedImage(withContentMode: .scaleAspectFill, bounds: size, interpolationQuality: .low)
+                let newImage = selectedImage.resizedImage(withContentMode: .scaleAspectFill, bounds: size, interpolationQuality: .medium)
                 DispatchQueue.main.async { [weak self] in
-                    //показать алерт
                     self?.photoLabel.image = newImage
                     self?.saveImage()
                 }
@@ -366,7 +367,7 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
     }
 
     private func saveImage() {
-        guard let data = photoLabel.image?.jpegData(compressionQuality: 0.5) else { return }
+        guard let data = photoLabel.image?.jpegData(compressionQuality: 1) else { return }
         let encoded = try? PropertyListEncoder().encode(data)
         UserDefaults.standard.set(encoded, forKey: "imageAvatar")
     }

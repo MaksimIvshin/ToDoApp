@@ -5,7 +5,7 @@
 //  Created by Maks Ivshin on 23.05.23.
 //
 
-import UIKit
+import Foundation
 
 extension Date {
     enum DateFormat: String {
