@@ -66,7 +66,7 @@ final class ViewModel: UIView {
         label.textAlignment = .left
         return label
     }()
-    
+
     func configure(model: ToDoItem) {
         backgroundColor = .white
         nameLabel.text = model.name

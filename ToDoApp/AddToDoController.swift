@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol AddViewControllerDelegate: AnyObject  {
-    func updateHomeWorks()
+    func updateTodoItems()
 }
 
 class AddToDoController: BaseViewController,
@@ -70,6 +70,9 @@ class AddToDoController: BaseViewController,
         tf.layer.cornerRadius = 4
         tf.delegate = self
         tf.translatesAutoresizingMaskIntoConstraints = false
+        let newWidth = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = newWidth
+        tf.leftViewMode = .always
         tf.addSubview(separatorForNameTF)
         tf.snp.makeConstraints {
             $0.height.equalTo(56)
@@ -83,6 +86,7 @@ class AddToDoController: BaseViewController,
         tv.font = UIFont.systemFont(ofSize: 17)
         tv.layer.cornerRadius = 4
         tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.textContainerInset = UIEdgeInsets(top: 18, left: 5, bottom: 0, right: 0)
         tv.addSubview(placeHolderForDescriprionTV)
         tv.snp.makeConstraints {
             $0.height.equalTo(56)
@@ -106,6 +110,9 @@ class AddToDoController: BaseViewController,
         tf.addSubview(imageCalendar)
         tf.inputAccessoryView = toolBar
         tf.translatesAutoresizingMaskIntoConstraints = false
+        let newWidth = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: tf.frame.height))
+        tf.leftView = newWidth
+        tf.leftViewMode = .always
         tf.addSubview(separatorForDateTF)
         tf.snp.makeConstraints {
             $0.height.equalTo(56)
@@ -214,7 +221,7 @@ class AddToDoController: BaseViewController,
         }
         
         placeHolderForDescriprionTV.snp.makeConstraints{
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().inset(10)
             $0.top.centerY.equalTo(descripitonTV)
         }
         
@@ -283,7 +290,7 @@ class AddToDoController: BaseViewController,
         ToDoManagerImp.shared.save(toDoItem: newToDo)
         NotificationManager.shared.scheduleNotification(title: newToDo.name, body: newToDo.subscribe, date: newToDo.actionDate)
         self.navigationController?.popViewController(animated: true)
-        self.delegate?.updateHomeWorks()
+        self.delegate?.updateTodoItems()
     }
     
     @objc func saveHomeWork() {
